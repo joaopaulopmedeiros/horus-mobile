@@ -35,7 +35,7 @@ const Routes = () => {
             component={Cvli}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
+                <MaterialCommunityIcons name="alarm-light-outline" color={color} size={size} />
               ),
             }}
           />
