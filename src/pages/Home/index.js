@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { customMapStyle } from "../../styles/maps/index";
 import crossHair from "../../../assets/crosshair.png";
+import marker from "../../../assets/marker.png";
 
 const Home = () => {
   const insets = useSafeAreaInsets();
@@ -27,7 +28,16 @@ const Home = () => {
           alignItems: "center",
         }}
         customMapStyle={customMapStyle}
-      ></MapView>
+      >
+        <Marker
+          coordinate={{
+            latitude: -5.8453006,
+            longitude: -35.2697694,
+          }}
+        >
+          <Image source={marker} />
+        </Marker>
+      </MapView>
       <View
         style={{
           position: "absolute",
@@ -38,8 +48,8 @@ const Home = () => {
           borderRadius: 16,
           backgroundColor: "#FFFFFF",
           zIndex: 5,
-          justifyContent: 'center',
-          alignItems: 'center'
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Image source={crossHair} />
