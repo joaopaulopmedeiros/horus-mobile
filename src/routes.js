@@ -7,6 +7,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 const Tab = createBottomTabNavigator();
 
 import Home from "./pages/Home/index";
+import Cvli from "./pages/Cvli/index";
+import Register from "./pages/Register/index";
+import Account from "./pages/Account/index";
 
 const Routes = () => {
   return (
@@ -21,6 +24,33 @@ const Routes = () => {
           <Tab.Screen
             name="Início"
             component={Home}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Crimes"
+            component={Cvli}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Registrar"
+            component={Register}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Conta"
+            component={Account}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} />

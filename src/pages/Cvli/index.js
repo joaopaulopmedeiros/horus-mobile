@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const Home = () => {
+const Cvli = () => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -16,9 +16,9 @@ const Home = () => {
         alignItems: 'center',
       }}
     >
-      <Text>SUSI</Text>
+      <Text>Ver Crimes</Text>
     </View>
   );
 };
 
-export default Home;
+export default Cvli;

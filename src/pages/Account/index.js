@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const Home = () => {
+const Account = () => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -16,9 +16,9 @@ const Home = () => {
         alignItems: 'center',
       }}
     >
-      <Text>SUSI</Text>
+      <Text>Conta</Text>
     </View>
   );
 };
 
-export default Home;
+export default Account;
