@@ -18,7 +18,7 @@ const Routes = () => {
         <Tab.Navigator
           tabBarOptions={{
             activeTintColor: "#0F4C75",
-            inactiveTintColor: "#DFDEDE",
+            inactiveTintColor: "#89969F",
           }}
         >
           <Tab.Screen
@@ -44,7 +44,7 @@ const Routes = () => {
             component={Register}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
+                <MaterialCommunityIcons name="notebook" color={color} size={size} />
               ),
             }}
           />
@@ -53,7 +53,7 @@ const Routes = () => {
             component={Account}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
+                <MaterialCommunityIcons name="account" color={color} size={size} />
               ),
             }}
           />
