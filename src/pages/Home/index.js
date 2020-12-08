@@ -41,25 +41,25 @@ const Home = () => {
 
         const { latitude, longitude } = coords;
 
-        const region = {
+        setCurrentRegion({
           latitude,
           longitude,
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
-        };
-
-        setCurrentRegion(region);
+        });
 
         setGPSIsGranted(true);
 
-        mapRef.current.animateCamera(
-          {
-            center: {
-              region,
-            },
-          },
-          { duration: 2000 }
-        );
+        mapRef.current.animateCamera({
+          center: {
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+            zoom: 2,
+          }
+        });
+
       }
     } catch (error) {
       console.log(error);
@@ -102,10 +102,7 @@ const Home = () => {
         </Marker>*/}
       </MapView>
       {GPSIsGranted === false && (
-        <TurnOnGPSContainer
-          marginTop={insets.top + 64}
-          onPress={loadPosition}
-        >
+        <TurnOnGPSContainer marginTop={insets.top + 64} onPress={loadPosition}>
           <Image source={crossHair} />
         </TurnOnGPSContainer>
       )}
