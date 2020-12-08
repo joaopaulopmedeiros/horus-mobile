@@ -20,18 +20,18 @@ const Home = () => {
   const insets = useSafeAreaInsets();
 
   const [currentRegion, setCurrentRegion] = useState(null);
-  const [GPSIsActive, setGPSIsActive] = useState(false);
+  const [GPSIsGranted, setGPSIsGranted] = useState(false);
   const mapRef = useRef(null);
 
   useEffect(() => {
-    loadInitialPosition();
+    loadPosition();
   }, []);
 
   useEffect(() => {
-    loadInitialPosition();
-  }, [currentRegion]);
+    loadPosition();
+  }, [GPSIsGranted]);
 
-  async function loadInitialPosition() {
+  async function loadPosition() {
     try {
       const { granted } = await requestPermissionsAsync();
       if (granted) {
@@ -41,21 +41,32 @@ const Home = () => {
 
         const { latitude, longitude } = coords;
 
-        setCurrentRegion({
+        const region = {
           latitude,
           longitude,
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
-        });
+        };
 
-        setGPSIsActive(true);
+        setCurrentRegion(region);
+
+        setGPSIsGranted(true);
+
+        mapRef.current.animateCamera(
+          {
+            center: {
+              region,
+            },
+          },
+          { duration: 2000 }
+        );
       }
     } catch (error) {
       console.log(error);
 
       setCurrentRegion(defaultMapLocation);
 
-      setGPSIsActive(false);
+      setGPSIsGranted(false);
     }
   }
 
@@ -90,8 +101,11 @@ const Home = () => {
           <Image source={marker} />
         </Marker>*/}
       </MapView>
-      {GPSIsActive === false && (
-        <TurnOnGPSContainer marginTop={insets.top + 64} onPress={loadInitialPosition}>
+      {GPSIsGranted === false && (
+        <TurnOnGPSContainer
+          marginTop={insets.top + 64}
+          onPress={loadPosition}
+        >
           <Image source={crossHair} />
         </TurnOnGPSContainer>
       )}
