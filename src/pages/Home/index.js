@@ -10,7 +10,7 @@ import {
 
 import defaultMapLocation from "../../utils/defaultMapLocation";
 
-import { GPS } from "./styles";
+import { TurnOnGPSContainer } from "./styles";
 import { customMapStyle } from "../../styles/maps/index";
 
 import marker from "../../../assets/marker.png";
@@ -95,10 +95,10 @@ const Home = () => {
           <Image source={marker} />
         </Marker>*/}
       </MapView>
-      {GPSIsActive && (
-        <GPS marginTop={insets.top + 64} onPress={loadInitialPosition}>
+      {GPSIsActive === false && (
+        <TurnOnGPSContainer marginTop={insets.top + 64} onPress={loadInitialPosition}>
           <Image source={crossHair} />
-        </GPS>
+        </TurnOnGPSContainer>
       )}
     </>
   );
