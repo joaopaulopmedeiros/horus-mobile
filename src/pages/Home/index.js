@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,10 +20,16 @@ const Home = () => {
   const insets = useSafeAreaInsets();
 
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [GPSIsActive, setGPSIsActive] = useState(false);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     loadInitialPosition();
   }, []);
+
+  useEffect(() => {
+    loadInitialPosition();
+  }, [currentRegion]);
 
   async function loadInitialPosition() {
     try {
@@ -41,11 +47,20 @@ const Home = () => {
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
         });
+
+        setGPSIsActive(true);
+
+        mapRef.current.animateCamera(
+          { center: latitude, longitude },
+          { duration: 2000 }
+        );
       }
     } catch (error) {
       console.log(error);
 
       setCurrentRegion(defaultMapLocation);
+
+      setGPSIsActive(false);
     }
   }
 
@@ -61,6 +76,7 @@ const Home = () => {
     <>
       <MapView
         tooltip={true}
+        ref={mapRef}
         initialRegion={currentRegion}
         onRegionChangeComplete={handleRegionChanged}
         customMapStyle={customMapStyle}
@@ -79,9 +95,11 @@ const Home = () => {
           <Image source={marker} />
         </Marker>*/}
       </MapView>
-      {/* <GPS marginTop={insets.top + 8} onClick={() => loadInitialPosition()}>
-        <Image source={crossHair} />
-        </GPS>*/}
+      {GPSIsActive && (
+        <GPS marginTop={insets.top + 64} onPress={loadInitialPosition}>
+          <Image source={crossHair} />
+        </GPS>
+      )}
     </>
   );
 };

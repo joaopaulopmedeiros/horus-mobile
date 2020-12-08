@@ -7,7 +7,7 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const GPS = styled.View`
+export const GPS = styled.TouchableOpacity`
   position: absolute;
   top: ${(props) => props.marginTop}px;
   right: 40px;
