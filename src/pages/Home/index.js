@@ -49,11 +49,6 @@ const Home = () => {
         });
 
         setGPSIsActive(true);
-
-        mapRef.current.animateCamera(
-          { center: latitude, longitude },
-          { duration: 2000 }
-        );
       }
     } catch (error) {
       console.log(error);
