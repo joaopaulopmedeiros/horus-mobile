@@ -8,7 +8,8 @@ import {
   getCurrentPositionAsync,
 } from "expo-location";
 
-import defaultMapLocation from "../../utils/defaultMapLocation";
+import api from "../../services/api";
+import defaultMapLocation from "../../services/defaultMapLocation";
 
 import { TurnOnGPSContainer } from "./styles";
 import { customMapStyle } from "../../styles/maps/index";
@@ -20,16 +21,13 @@ const Home = () => {
   const insets = useSafeAreaInsets();
 
   const [currentRegion, setCurrentRegion] = useState(null);
-  const [GPSIsGranted, setGPSIsGranted] = useState(false);
+  const [GPSIsGranted, setGPSIsGranted] = useState(null);
   const mapRef = useRef(null);
 
   useEffect(() => {
     loadPosition();
+    loadCvlis();
   }, []);
-
-  useEffect(() => {
-    loadPosition();
-  }, [GPSIsGranted]);
 
   async function loadPosition() {
     try {
@@ -57,9 +55,8 @@ const Home = () => {
             latitudeDelta: 0.04,
             longitudeDelta: 0.04,
             zoom: 2,
-          }
+          },
         });
-
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +64,17 @@ const Home = () => {
       setCurrentRegion(defaultMapLocation);
 
       setGPSIsGranted(false);
+    }
+  }
+
+  async function loadCvlis() {
+    try {
+      const response = await api.get("/cvlis");
+      console.log("loading...");
+      console.log(response.data);
+    } catch (error) {
+      console.log("noooot");
+      console.log(error);
     }
   }
 
@@ -102,7 +110,13 @@ const Home = () => {
         </Marker>*/}
       </MapView>
       {GPSIsGranted === false && (
-        <TurnOnGPSContainer marginTop={insets.top + 64} onPress={loadPosition}>
+        <TurnOnGPSContainer
+          marginTop={insets.top + 64}
+          onPress={() => {
+            loadPosition();
+            loadCvlis();
+          }}
+        >
           <Image source={crossHair} />
         </TurnOnGPSContainer>
       )}
