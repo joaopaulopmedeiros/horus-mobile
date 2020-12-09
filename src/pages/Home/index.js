@@ -1,59 +1,111 @@
-import React from "react";
-import { View, Image } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+
+import { Image } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MapView, { Marker } from "react-native-maps";
+import {
+  requestPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
+
+import defaultMapLocation from "../../utils/defaultMapLocation";
+
+import { TurnOnGPSContainer } from "./styles";
 import { customMapStyle } from "../../styles/maps/index";
-import crossHair from "../../../assets/crosshair.png";
+
 import marker from "../../../assets/marker.png";
+import crossHair from "../../../assets/crosshair.png";
 
 const Home = () => {
   const insets = useSafeAreaInsets();
+
+  const [currentRegion, setCurrentRegion] = useState(null);
+  const [GPSIsGranted, setGPSIsGranted] = useState(false);
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    loadPosition();
+  }, []);
+
+  useEffect(() => {
+    loadPosition();
+  }, [GPSIsGranted]);
+
+  async function loadPosition() {
+    try {
+      const { granted } = await requestPermissionsAsync();
+      if (granted) {
+        const { coords } = await getCurrentPositionAsync({
+          enableHighAccuracy: true,
+        });
+
+        const { latitude, longitude } = coords;
+
+        setCurrentRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.04,
+          longitudeDelta: 0.04,
+        });
+
+        setGPSIsGranted(true);
+
+        mapRef.current.animateCamera({
+          center: {
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+            zoom: 2,
+          }
+        });
+
+      }
+    } catch (error) {
+      console.log(error);
+
+      setCurrentRegion(defaultMapLocation);
+
+      setGPSIsGranted(false);
+    }
+  }
+
+  function handleRegionChanged(region) {
+    setCurrentRegion(region);
+  }
+
+  if (!currentRegion) {
+    return null;
+  }
 
   return (
     <>
       <MapView
         tooltip={true}
-        initialRegion={{
-          latitude: -5.8453006,
-          longitude: -35.2697694,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        ref={mapRef}
+        initialRegion={currentRegion}
+        onRegionChangeComplete={handleRegionChanged}
+        customMapStyle={customMapStyle}
         style={{
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
         }}
-        customMapStyle={customMapStyle}
       >
-        <Marker
+        {/*<Marker
           coordinate={{
             latitude: -5.8453006,
             longitude: -35.2697694,
           }}
         >
           <Image source={marker} />
-        </Marker>
+        </Marker>*/}
       </MapView>
-      <View
-        style={{
-          position: "absolute",
-          top: insets.top + 40,
-          right: 40,
-          width: 40,
-          height: 40,
-          borderRadius: 16,
-          backgroundColor: "#FFFFFF",
-          zIndex: 5,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image source={crossHair} />
-      </View>
+      {GPSIsGranted === false && (
+        <TurnOnGPSContainer marginTop={insets.top + 64} onPress={loadPosition}>
+          <Image source={crossHair} />
+        </TurnOnGPSContainer>
+      )}
     </>
   );
 };
