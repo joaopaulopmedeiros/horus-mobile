@@ -7,6 +7,7 @@ const ListTypeOfCvlis = () => {
       style={{
         width: "100%",
         height: "30%",
+        height: 540,
         paddingLeft: "8%",
         paddingTop: "2%",
         //backgroundColor: 'green'

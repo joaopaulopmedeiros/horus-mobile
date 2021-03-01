@@ -7,6 +7,7 @@ const ListLastCvlis = () => {
       style={{
         width: "100%",
         height: "30%",
+        height: 240,
         justifyContent: "center",
         paddingLeft: "8%",
         paddingTop: "2%",
