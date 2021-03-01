@@ -15,11 +15,15 @@ const Login = () => {
         width={40}
         source={require("../../../assets/user.png")}
       />
-      <Text style={{
-          fontFamily: 'Montserrat_600SemiBold',
+      <Text
+        style={{
+          fontFamily: "Montserrat_600SemiBold",
           color: "rgba(20,119,248,1)",
-          marginBottom: 20
-      }}>Olá, seja bem-vindo</Text>
+          marginBottom: 20,
+        }}
+      >
+        Olá, seja bem-vindo
+      </Text>
       <View
         style={{
           width: "80%",
@@ -51,19 +55,27 @@ const Login = () => {
             backgroundColor: "rgba(20,119,248,0.8)",
             borderRadius: 3,
             width: "25%",
-            alignSelf: 'center'
+            alignSelf: "center",
           }}
         >
           <Text
             style={{
               paddingVertical: 8,
               paddingHorizontal: 16,
-              color: '#fff'
+              color: "#fff",
             }}
           >
             Entrar
           </Text>
         </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 40,
+            alignSelf: "center",
+          }}
+        >
+          Ainda não tem uma conta? <Text style={{color: "rgba(20,119,248,1)"}}>Registre-se</Text>
+        </Text>
       </View>
     </View>
   );
