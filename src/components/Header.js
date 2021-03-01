@@ -7,12 +7,12 @@ const Header = (props) => {
       style={{
         backgroundColor: "rgba(20,119,248,0.8)",
         width: "100%",
-        height: "11.5%",
+        height: "10%",
         justifyContent: "center",
         paddingLeft: "8%",
       }}
     >
-      <Text style={{ textTransform: "uppercase", fontSize: 16, color: "#fff" }}>
+      <Text style={{ textTransform: "uppercase", color: "#fff", fontFamily: 'Montserrat_600SemiBold' }}>
         {props.title}
       </Text>
     </View>
