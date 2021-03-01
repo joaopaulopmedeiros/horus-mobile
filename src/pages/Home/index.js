@@ -101,6 +101,7 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
+        marginTop={insets.top}
       >
         <Marker
           coordinate={{

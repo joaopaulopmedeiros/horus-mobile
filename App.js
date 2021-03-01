@@ -24,7 +24,7 @@ export default () => {
       <>
         <StatusBar
           barStyle="dark-content"
-          backgroundColor="transparent"
+          backgroundColor="rgba(20,119,248,0.8)"
           translucent
         />
         <Routes />
