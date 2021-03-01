@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 
-const ListLast = () => {
+const ListLastCvlis = () => {
   return (
     <View
       style={{
@@ -229,4 +229,4 @@ const ListLast = () => {
   );
 };
 
-export default ListLast;
+export default ListLastCvlis;

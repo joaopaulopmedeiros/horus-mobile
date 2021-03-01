@@ -2,7 +2,7 @@ import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import { Container } from "../../components/Container";
-import ListLast from "./ListLast";
+import ListLastCvlis from "./ListLastCvlis";
 
 const Cvli = () => {
   const insets = useSafeAreaInsets();
@@ -10,7 +10,7 @@ const Cvli = () => {
   return (
     <Container marginTop={insets.top}>
       <Header title="Crimes Registrados" />
-      <ListLast />
+      <ListLastCvlis />
     </Container>
   );
 };
