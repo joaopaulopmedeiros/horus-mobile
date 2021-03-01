@@ -1,23 +1,16 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Header from "../../components/Header";
+import { Container } from "../../components/Container";
 
 const Register = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      style={{
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Registrar crimes</Text>
-    </View>
+    <Container marginTop={insets.top}>
+      <Header title="Registrar Crimes" />
+    </Container>
   );
 };
 
