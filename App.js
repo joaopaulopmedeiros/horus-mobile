@@ -10,6 +10,7 @@ import {
   Montserrat_700Bold,
   Montserrat_600SemiBold
 } from "@expo-google-fonts/montserrat";
+import { AuthProvider } from "./src/contexts/auth";
 
 export default () => {
   let [fontsLoaded] = useFonts({
@@ -29,7 +30,9 @@ export default () => {
           backgroundColor="rgba(20,119,248,0.8)"
           translucent
         />
-        <Routes />
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
       </>
     );
   }

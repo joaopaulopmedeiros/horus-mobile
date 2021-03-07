@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Image, TextInput, TouchableOpacity, Text } from "react-native";
+import { AuthContext } from "../../contexts/auth";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+
+  function handleLogin() {
+    login();
+  }
+
   return (
     <View
       style={{
@@ -50,6 +57,7 @@ const Login = () => {
           autoCorrect={false}
         />
         <TouchableOpacity
+          onPress={handleLogin}
           style={{
             marginTop: 10,
             backgroundColor: "rgba(20,119,248,0.8)",
