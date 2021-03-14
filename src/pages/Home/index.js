@@ -23,6 +23,8 @@ const Home = () => {
 
   const [currentRegion, setCurrentRegion] = useState(null);
   const [GPSIsGranted, setGPSIsGranted] = useState(null);
+  const [cvlis, setCvlis] = useState(null);
+
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -71,8 +73,9 @@ const Home = () => {
   async function loadCvlis() {
     try {
       const response = await api.get('/cvlis');
-      console.log(response.data);
-      console.log("loading...");
+      console.log('loading');
+      setCvlis(response.data.data);
+      console.log(cvlis);
     } catch (error) {
       console.log(error);
     }
@@ -101,14 +104,17 @@ const Home = () => {
         }}
         marginTop={insets.top}
       >
-        <Marker
-          coordinate={{
-            latitude: -5.8453006,
-            longitude: -35.2697694,
-          }}
-        >
-          <Image source={marker} />
-        </Marker>
+        {cvlis != null && cvlis.map(cvli => (
+          <Marker
+            key={cvli.id}
+            coordinate={{
+              latitude: cvli.latitude,
+              longitude: cvli.longitude,
+            }}
+          >
+            <Image source={marker} />
+          </Marker>
+        ))}
       </MapView>
       {GPSIsGranted === false && (
         <TurnOnGPSContainer
