@@ -123,7 +123,7 @@ const Home = ({ navigation }) => {
                 borderRadius: 8
               }}
               onPress={() => {
-                navigation.navigate('CvliDetails')
+                navigation.navigate('Crimes', { screen: 'Details' })
               }}
             >
               <View
