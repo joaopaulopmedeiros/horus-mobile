@@ -8,7 +8,7 @@ import {
   getCurrentPositionAsync,
 } from "expo-location";
 
-import axios from "axios";
+import api from "../../services/api";
 //import api from "../../services/api";
 import defaultMapLocation from "../../services/defaultMapLocation";
 
@@ -70,9 +70,7 @@ const Home = () => {
 
   async function loadCvlis() {
     try {
-      const response = await axios.get(
-        "http://192.168.1.103:3333/api/cvlis"
-      );
+      const response = await api.get('/cvlis');
       console.log(response.data);
       console.log("loading...");
     } catch (error) {
