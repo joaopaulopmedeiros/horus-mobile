@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { Image } from "react-native";
+import { Image, View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
 
 import api from "../../services/api";
-//import api from "../../services/api";
 import defaultMapLocation from "../../services/defaultMapLocation";
 
 import { TurnOnGPSContainer } from "./styles";
 import { customMapStyle } from "../../styles/maps/index";
 
 import marker from "../../../assets/marker.png";
+import verified from "../../../assets/verified.png";
 import crossHair from "../../../assets/crosshair.png";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const insets = useSafeAreaInsets();
 
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -113,6 +113,60 @@ const Home = () => {
             }}
           >
             <Image source={marker} />
+
+            <Callout 
+              style={{
+                width: 260,
+                backgroundColor: "#fff",
+                borderWidth: 2,
+                borderColor: "#eee",
+                borderRadius: 8
+              }}
+              onPress={() => {
+                navigation.navigate('CvliDetails')
+              }}
+            >
+              <View
+              >
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_600SemiBold",
+                    fontSize: 16,
+                    color: "rgba(20,119,248,0.8)",
+                  }}
+                >
+                  {cvli.title}
+                </Text>
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat_500Medium",
+                      fontSize: 10,
+                      color: "#77838F",
+                    }}
+                  >
+                    {cvli.description}
+                  </Text>
+                  {cvli.verified == 1 &&
+                    <View style={{
+                      marginTop: 4,
+                      display: 'flex',
+                      flexDirection: 'row'
+                    }}>
+                      <Text>
+                        <Image source={verified} />
+                      </Text>
+                      <Text style={{
+                        fontFamily: "Montserrat_500Medium",
+                        fontSize: 10,
+                        marginLeft: 2,
+                        color: '#77838F'
+                      }}>Verificado</Text>
+                    </View>
+                  }
+                </View>
+              </View>
+            </Callout>
           </Marker>
         ))}
       </MapView>
