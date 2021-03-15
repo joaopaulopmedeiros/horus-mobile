@@ -14,9 +14,6 @@ const Account = () => {
   return (
     <Container marginTop={insets.top}>
       <Header title="Conta" />
-      <Text>
-        Logado: {loggedIn}
-      </Text>
       <Login />
     </Container>
   );

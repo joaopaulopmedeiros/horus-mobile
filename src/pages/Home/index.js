@@ -114,7 +114,7 @@ const Home = ({ navigation }) => {
           >
             <Image source={marker} />
 
-            <Callout 
+            <Callout
               style={{
                 width: 260,
                 backgroundColor: "#fff",
@@ -123,7 +123,7 @@ const Home = ({ navigation }) => {
                 borderRadius: 8
               }}
               onPress={() => {
-                navigation.navigate('Crimes', { screen: 'Details' })
+                navigation.navigate('Crimes', { screen: 'Details', params: { cvli: cvli }})
               }}
             >
               <View
