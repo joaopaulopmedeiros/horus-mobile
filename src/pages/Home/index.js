@@ -79,11 +79,8 @@ const Home = ({ navigation }) => {
           latitude, longitude
         }
       });
-
       console.log('loading');
-      console.log(response.data)
-      setCvlis(response.data.data);
-      console.log(cvlis);
+      setCvlis(response.data);
     } catch (error) {
       console.log(error);
     }
