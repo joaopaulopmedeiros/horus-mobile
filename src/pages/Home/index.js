@@ -72,8 +72,16 @@ const Home = ({ navigation }) => {
 
   async function loadCvlis() {
     try {
-      const response = await api.get('/cvlis');
+      const { latitude, longitude } = currentRegion;
+
+      const response = await api.get('/cvlis', {
+        params: {
+          latitude, longitude
+        }
+      });
+
       console.log('loading');
+      console.log(response.data)
       setCvlis(response.data.data);
       console.log(cvlis);
     } catch (error) {
@@ -123,7 +131,7 @@ const Home = ({ navigation }) => {
                 borderRadius: 8
               }}
               onPress={() => {
-                navigation.navigate('Crimes', { screen: 'Details', params: { cvli: cvli }})
+                navigation.navigate('Crimes', { screen: 'Details', params: { cvli: cvli } })
               }}
             >
               <View
