@@ -28,8 +28,9 @@ const Home = ({ navigation }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    loadPosition();
-    loadCvlis();
+    loadPosition()
+      .then(position => loadCvlis(position))
+      .catch(error => console.error(error));
   }, []);
 
   async function loadPosition() {
@@ -60,6 +61,10 @@ const Home = ({ navigation }) => {
             zoom: 2,
           },
         });
+        return {
+          latitude,
+          longitude,
+        }
       }
     } catch (error) {
       console.log(error);
@@ -70,9 +75,9 @@ const Home = ({ navigation }) => {
     }
   }
 
-  async function loadCvlis() {
+  async function loadCvlis(position) {
     try {
-      const { latitude, longitude } = currentRegion;
+      const { latitude, longitude } = position;
 
       const response = await api.get('/cvlis', {
         params: {
@@ -179,8 +184,9 @@ const Home = ({ navigation }) => {
         <TurnOnGPSContainer
           marginTop={insets.top + 64}
           onPress={() => {
-            loadPosition();
-            loadCvlis();
+            loadPosition()
+              .then(position => loadCvlis(position))
+              .catch(error => console.error(error));
           }}
         >
           <Image source={crossHair} />
