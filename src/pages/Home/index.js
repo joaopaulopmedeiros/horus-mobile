@@ -15,7 +15,8 @@ import { TurnOnGPSContainer } from "./styles";
 import { customMapStyle } from "../../styles/maps/index";
 
 import marker from "../../../assets/marker.png";
-import verified from "../../../assets/verified.png";
+//import verified from "";
+import VerifiedIcon from "../../styles/icons/index";
 import crossHair from "../../../assets/crosshair.png";
 
 const Home = ({ navigation }) => {
@@ -159,12 +160,12 @@ const Home = ({ navigation }) => {
                   </Text>
                   {cvli.verified == 1 &&
                     <View style={{
-                      marginTop: 4,
+                      marginTop: 3,
                       display: 'flex',
                       flexDirection: 'row'
                     }}>
                       <Text>
-                        <Image source={verified} />
+                        <VerifiedIcon />
                       </Text>
                       <Text style={{
                         fontFamily: "Montserrat_500Medium",
