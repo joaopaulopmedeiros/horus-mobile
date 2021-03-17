@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Header from "../../components/Header";
-import { Container } from "../../components/Container";
 import Login from "./Login";
 import { AuthContext } from "../../contexts/auth";
-import { Text } from "react-native"
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
 const Account = () => {
-  const insets = useSafeAreaInsets();
-  
+
   const { loggedIn, user } = useContext(AuthContext);
 
   return (
-    <Container marginTop={insets.top}>
-      <Header title="Conta" />
-      <Login />
-    </Container>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+    >
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="jsj" component={Login} />
+    </Stack.Navigator>
   );
 };
 
