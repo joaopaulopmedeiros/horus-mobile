@@ -21,30 +21,20 @@ const Profile = () => {
         <Container marginTop={insets.top}>
             <Header title="Conta" />
             <View
-                style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
+                style={styles.wrapper}
             >
                 <Image
-                    style={{ marginTop: "10%", marginBottom: "5%" }}
+                    style={styles.avatar}
                     width={40}
                     source={require("../../../../assets/user.png")}
                 />
                 <Text
-                    style={{
-                        fontFamily: "Montserrat_600SemiBold",
-                        color: "rgba(20,119,248,1)",
-                        marginBottom: 20,
-                    }}
+                    style={styles.title}
                 >
                     Seus dados
                 </Text>
                 <View
-                    style={{
-                        width: "80%",
-                    }}
+                    style={styles.container}
                 >
                     <Text>Seu Email</Text>
                     <TextInput
@@ -87,6 +77,23 @@ const Profile = () => {
 };
 
 const styles = StyleSheet.create({
+    wrapper: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    container: {
+        width: "80%",
+    },
+    avatar: {
+        marginTop: "10%",
+        marginBottom: "5%"
+    },
+    title: {
+        fontFamily: "Montserrat_600SemiBold",
+        color: "rgba(20,119,248,1)",
+        marginBottom: 20,
+    },
     notEditableInput: {
         borderWidth: 2,
         borderColor: "#CDCDD2",
@@ -115,7 +122,7 @@ const styles = StyleSheet.create({
     logoutIconWrapper: {
         alignItems: 'center',
         marginTop: 80,
-    }
+    },
 })
 
 export default Profile;
