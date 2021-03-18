@@ -19,6 +19,7 @@ const Routes = () => {
           tabBarOptions={{
             activeTintColor: "#0F4C75",
             inactiveTintColor: "#89969F",
+            keyboardHidesTabBar: true
           }}
         >
           <Tab.Screen
