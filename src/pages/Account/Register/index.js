@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { View, Image, TextInput, TouchableOpacity, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import Header from "../../../components/Header";
+import { AuthContext } from "../../../contexts/auth";
 import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RadioButton } from 'react-native-paper';
-import api from "../../../services/api";
+import { TextInputMask } from 'react-native-masked-text';
 
 const AccountRegister = ({ navigation }) => {
+    const { register } = useContext(AuthContext);
+
     const [checked, setChecked] = useState(false);
 
     const [user, setUser] = useState({
@@ -29,13 +32,11 @@ const AccountRegister = ({ navigation }) => {
     }
 
     async function onSubmit() {
-        try {
-            if(!checked) return;
+        if (!checked) return;
 
-            const { register } = useContext(AuthContext);
-            
+        try {
             register(user);
-            
+
             Alert.alert(
                 "Sucesso",
                 "Usuário cadastrado com sucesso!",
@@ -45,7 +46,14 @@ const AccountRegister = ({ navigation }) => {
                 { cancelable: false }
             );
         } catch {
-            console.log('Unhandled exception on registering user');
+            Alert.alert(
+                "Erro",
+                "Dados inconsistentes!",
+                [
+                    { text: "OK", onPress: () => { } }
+                ],
+                { cancelable: false }
+            );
         }
     }
 
@@ -85,24 +93,34 @@ const AccountRegister = ({ navigation }) => {
                             autoCompleteType="email"
                             placeholder="user@email.com"
                             autoCapitalize="none"
+                            value={user.email}
                             onChangeText={(value) => handleInputChange('email', value)}
                         />
                         <Text>Seu CPF</Text>
-                        <TextInput
+                        <TextInputMask
+                            type={'cpf'}
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             placeholder="XXX.XXX.XXX-XX"
                             autoCapitalize="words"
                             multiline={false}
+                            value={user.cpf}
                             onChangeText={(value) => handleInputChange('cpf', value)}
                         />
                         <Text>Seu Número de Celular</Text>
-                        <TextInput
+                        <TextInputMask
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             placeholder="(00) 00000-0000"
                             autoCapitalize="words"
                             multiline={false}
+                            type={'cel-phone'}
+                            options={{
+                                maskType: 'BRL',
+                                withDDD: true,
+                                dddMask: '(99) '
+                            }}
+                            value={user.phone}
                             onChangeText={(value) => handleInputChange('phone', value)}
                         />
                         <Text>Sua Senha</Text>
@@ -110,6 +128,7 @@ const AccountRegister = ({ navigation }) => {
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             secureTextEntry={true}
+                            value={user.password}
                             onChangeText={(value) => handleInputChange('password', value)}
                         />
                         <Text>Confirme Sua Senha</Text>
@@ -117,6 +136,7 @@ const AccountRegister = ({ navigation }) => {
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             secureTextEntry={true}
+                            value={user.password_confirmation}
                             onChangeText={(value) => handleInputChange('password_confirmation', value)}
                         />
                         <RadioButton.Group onValueChange={newValue => setChecked(newValue)} value={checked}>
@@ -133,7 +153,7 @@ const AccountRegister = ({ navigation }) => {
                         </TouchableOpacity>
                         <Text style={{ textAlign: 'center', marginVertical: 8 }}>
                             <Text>Já possuo uma conta.</Text>
-                            <Text style={{ color: "rgba(20,119,248,1)" }}> Entrar</Text>
+                            <Text style={{ color: "rgba(20,119,248,1)" }} onPress={() => { handleNavigationToAccountLogin() }}> Entrar</Text>
                         </Text>
                     </View>
                 </View>

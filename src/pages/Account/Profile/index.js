@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import logoutIcon from '../../../../assets/logout.png'
 
 const Profile = () => {
-    const { logout } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     const insets = useSafeAreaInsets();
 
@@ -39,7 +39,7 @@ const Profile = () => {
                     <Text>Seu Email</Text>
                     <TextInput
                         style={styles.notEditableInput}
-                        value="joao@email.com"
+                        value={user.email}
                         editable={false}
                         placeholderTextColor="#999"
                         autoCapitalize="words"
@@ -48,7 +48,7 @@ const Profile = () => {
                     <Text style={{ marginTop: 10 }}>Seu CPF</Text>
                     <TextInput
                         style={styles.notEditableInput}
-                        value="000.000.000-00"
+                        value={user.cpf}
                         editable={false}
                         placeholderTextColor="#999"
                         autoCapitalize="words"
@@ -57,7 +57,7 @@ const Profile = () => {
                     <Text style={{ marginTop: 10 }}>Sua Senha</Text>
                     <TextInput
                         style={styles.notEditableInput}
-                        value="123456"
+                        value={user.password}
                         editable={false}
                         placeholderTextColor="#999"
                         secureTextEntry={true}
