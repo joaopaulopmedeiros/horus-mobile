@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
-import { } from "react-native-gesture-handler";
 
-const CvliDetails = ({ route }) => {
+const CvliDetails = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const { cvli } = route.params;
   const [date, time] = cvli.created_at.split('T');
   
   const formatedDate = date.split('-').reverse().join('/');
   const formatedTime = time.split('.0')[0];
+
+  useEffect(() => {
+    return () => {
+      navigation.navigate('Crimes', { screen: 'List'})
+    }
+  },[]);
 
   return (
     <Container marginTop={insets.top}>
