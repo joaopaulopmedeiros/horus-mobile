@@ -17,14 +17,6 @@ const Profile = () => {
         logout();
     }
 
-    async function vapo() {
-        const storagedToken = await AsyncStorage.getItem('@RNAuth:user');
-        console.log(storagedToken)
-    }
-    function handleProfile() {
-        Profile();
-    }
-
     return (
         <Container marginTop={insets.top}>
             <Header title="Conta" />
