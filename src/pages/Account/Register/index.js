@@ -21,11 +21,21 @@ const AccountRegister = ({ navigation }) => {
 
     const insets = useSafeAreaInsets();
 
-    async function handleRegister() {
-        try {
-            console.log()
-            //const response = await api.post('/auth/register');
+    function handleInputChange(inputName, inputValue) {
+        setUser(state => ({
+            ...state,
+            [inputName]: inputValue
+        }))
+    }
 
+    async function onSubmit() {
+        try {
+            if(!checked) return;
+
+            const { register } = useContext(AuthContext);
+            
+            register(user);
+            
             Alert.alert(
                 "Sucesso",
                 "Usuário cadastrado com sucesso!",
@@ -39,6 +49,7 @@ const AccountRegister = ({ navigation }) => {
         }
     }
 
+
     function handleNavigationToAccountLogin() {
         navigation.navigate('Conta', { screen: 'Login', initial: false });
     }
@@ -46,7 +57,7 @@ const AccountRegister = ({ navigation }) => {
     return (
         <Container marginTop={insets.top}>
             <Header title="Conta" />
-            <ScrollView style={{width: '100%'}}>
+            <ScrollView style={{ width: '100%' }}>
                 <View style={styles.wrapper}>
                     <Image
                         style={styles.avatar}
@@ -63,7 +74,9 @@ const AccountRegister = ({ navigation }) => {
                             placeholderTextColor="#999"
                             autoCompleteType="name"
                             placeholder="Primeiro e último"
+                            value={user.name}
                             autoCapitalize="words"
+                            onChangeText={(value) => handleInputChange('name', value)}
                         />
                         <Text>Seu Email</Text>
                         <TextInput
@@ -72,6 +85,7 @@ const AccountRegister = ({ navigation }) => {
                             autoCompleteType="email"
                             placeholder="user@email.com"
                             autoCapitalize="none"
+                            onChangeText={(value) => handleInputChange('email', value)}
                         />
                         <Text>Seu CPF</Text>
                         <TextInput
@@ -80,6 +94,7 @@ const AccountRegister = ({ navigation }) => {
                             placeholder="XXX.XXX.XXX-XX"
                             autoCapitalize="words"
                             multiline={false}
+                            onChangeText={(value) => handleInputChange('cpf', value)}
                         />
                         <Text>Seu Número de Celular</Text>
                         <TextInput
@@ -88,18 +103,21 @@ const AccountRegister = ({ navigation }) => {
                             placeholder="(00) 00000-0000"
                             autoCapitalize="words"
                             multiline={false}
+                            onChangeText={(value) => handleInputChange('phone', value)}
                         />
                         <Text>Sua Senha</Text>
                         <TextInput
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             secureTextEntry={true}
+                            onChangeText={(value) => handleInputChange('password', value)}
                         />
                         <Text>Confirme Sua Senha</Text>
                         <TextInput
                             style={styles.editableInput}
                             placeholderTextColor="#999"
                             secureTextEntry={true}
+                            onChangeText={(value) => handleInputChange('password_confirmation', value)}
                         />
                         <RadioButton.Group onValueChange={newValue => setChecked(newValue)} value={checked}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -110,7 +128,7 @@ const AccountRegister = ({ navigation }) => {
                                 </Text>
                             </View>
                         </RadioButton.Group>
-                        <TouchableOpacity onPress={handleRegister} style={styles.registerBtn}>
+                        <TouchableOpacity onPress={onSubmit} style={styles.registerBtn}>
                             <Text style={styles.registerBtnText}>Cadastrar</Text>
                         </TouchableOpacity>
                         <Text style={{ textAlign: 'center', marginVertical: 8 }}>

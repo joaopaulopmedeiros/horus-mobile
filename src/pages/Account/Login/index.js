@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useState, useContext } from "react";
 import { View, Image, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { AuthContext } from "../../../contexts/auth";
 import Header from "../../../components/Header";
@@ -10,12 +10,24 @@ const Login = ({ navigation }) => {
 
   const insets = useSafeAreaInsets();
 
+  const [user, setUser] = useState({
+    email: undefined,
+    password: undefined,
+  });
+
+  function handleInputChange(inputName, inputValue) {
+    setUser(state => ({
+      ...state,
+      [inputName]: inputValue
+    }))
+  }
+
   function handleLogin() {
-    login();
+    login(user);
   }
 
   function handleNavigationToAccountRegister() {
-    navigation.navigate('Conta', { screen: 'Registrar', initial: false})
+    navigation.navigate('Conta', { screen: 'Registrar', initial: false })
   }
 
 
@@ -38,19 +50,21 @@ const Login = ({ navigation }) => {
             placeholderTextColor="#999"
             autoCompleteType="email"
             autoCapitalize="none"
+            onChangeText={(value) => handleInputChange('email', value)}
           />
           <Text>Sua Senha</Text>
           <TextInput
             style={styles.editableInput}
             placeholderTextColor="#999"
             secureTextEntry={true}
+            onChangeText={(value) => handleInputChange('password', value)}
           />
 
           <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
             <Text style={styles.loginBtnText}>Entrar</Text>
           </TouchableOpacity>
-          <Text style={styles.register}>Ainda não tem uma conta?  
-            <Text onPress={() => {handleNavigationToAccountRegister()}} style={styles.registerLink}> Registre-se</Text>
+          <Text style={styles.register}>Ainda não tem uma conta?
+            <Text onPress={() => { handleNavigationToAccountRegister() }} style={styles.registerLink}> Registre-se</Text>
           </Text>
         </View>
       </View>
@@ -105,8 +119,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: "center",
   },
-  registerLink: { 
-    color: "rgba(20,119,248,1)", 
+  registerLink: {
+    color: "rgba(20,119,248,1)",
   },
 })
 

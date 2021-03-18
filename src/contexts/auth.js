@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
-import auth from '../services/auth';
 
 export const AuthContext = createContext({});
 
@@ -26,15 +25,16 @@ export const AuthProvider = ({children}) => {
         loadStorageAuthData();
     }, []);
 
-    async function login() {
+    async function login(guest) {
         try {
-            const response = await auth.login();
-            setUser(response.user);
+            const response = await api.post('/auth/login', guest);
+            const { user, access_token } = response.data;
+            setUser(user);
             
-            api.defaults.headers.common['Authorization'] = `Bearer ${response.token}`;
+            api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
-            await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
-            await AsyncStorage.setItem('@RNAuth:token', response.token);
+            await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(user));
+            await AsyncStorage.setItem('@RNAuth:token', access_token);
         } catch {
             console.warn('AuthProvider: Unhandled promise on login');
         }
@@ -49,8 +49,20 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+    async function register(guest) {
+        const response = await api.post('/auth/register', guest);
+        const { user, access_token } = response.data;
+            
+        setUser(user);
+        
+        api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+
+        await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(user));
+        await AsyncStorage.setItem('@RNAuth:token', access_token);
+    }
+
     return (
-        <AuthContext.Provider value={{loggedIn: !!user, user, login, logout}}>
+        <AuthContext.Provider value={{loggedIn: !!user, user, login, logout, register}}>
             {children}
         </AuthContext.Provider>
     );
