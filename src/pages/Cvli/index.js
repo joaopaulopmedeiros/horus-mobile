@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 const Cvli = () => {
     return (
         <Stack.Navigator
+            initialRouteName="List"
             screenOptions={{
                 headerShown: false,
                 animationEnabled: false,
