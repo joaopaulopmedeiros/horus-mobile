@@ -134,7 +134,7 @@ const Home = ({ navigation }) => {
                 borderRadius: 8
               }}
               onPress={() => {
-                navigation.navigate('Crimes', { screen: 'Details',initial: false, params: { cvli: cvli } })
+                navigation.navigate('Crimes', { screen: 'Detalhes',initial: false, params: { cvli: cvli } })
               }}
             >
               <View

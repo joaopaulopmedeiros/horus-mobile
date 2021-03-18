@@ -6,7 +6,7 @@ import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const { login } = useContext(AuthContext);
 
   const insets = useSafeAreaInsets();
@@ -14,6 +14,11 @@ const Login = () => {
   function handleLogin() {
     login();
   }
+
+  function handleNavigationToAccountRegister() {
+    navigation.navigate('Conta', { screen: 'Registrar', initial: false})
+  }
+
 
   return (
     <Container marginTop={insets.top}>
@@ -45,10 +50,8 @@ const Login = () => {
           <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
             <Text style={styles.loginBtnText}>Entrar</Text>
           </TouchableOpacity>
-          <Text
-            style={styles.register}
-          >
-            Ainda não tem uma conta? <Text style={styles.registerLink}>Registre-se</Text>
+          <Text style={styles.register}>Ainda não tem uma conta?  
+            <Text onPress={() => {handleNavigationToAccountRegister()}} style={styles.registerLink}> Registre-se</Text>
           </Text>
         </View>
       </View>

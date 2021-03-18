@@ -1,9 +1,10 @@
 import React from "react";
+import { Text } from "react-native";
 
 const AccountRegister = () => {
     return (
         <>
-            <h1>registro</h1>
+            <Text>registro</Text>
         </>
     );
 }

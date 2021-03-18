@@ -9,14 +9,14 @@ const Stack = createStackNavigator();
 const Cvli = () => {
     return (
         <Stack.Navigator
-            initialRouteName="List"
+            initialRouteName="Lista"
             screenOptions={{
                 headerShown: false,
                 animationEnabled: false,
             }}
         >
-            <Stack.Screen name="List" component={CvliList} />
-            <Stack.Screen name="Details" component={CvliDetails} />
+            <Stack.Screen name="Lista" component={CvliList} />
+            <Stack.Screen name="Detalhes" component={CvliDetails} />
         </Stack.Navigator>
     );
 }
