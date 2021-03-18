@@ -8,14 +8,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import logoutIcon from '../../../../assets/logout.png'
 
 const Profile = () => {
-    const {loggedIn, logout } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
 
     const insets = useSafeAreaInsets();
 
 
     function handleLogout() {
         logout();
-        console.log('loggedin: ', loggedIn)
     }
 
     async function vapo() {
