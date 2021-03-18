@@ -7,7 +7,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
-
+    
     useEffect(() => {
         async function loadStorageAuthData() {
             try {
@@ -71,8 +71,10 @@ export const AuthProvider = ({children}) => {
 
     async function register(guest) {
         console.log(guest, user)
+        
         const response = await api.post('/auth/register', guest);
         const { user, access_token } = response.data;
+        
         console.log(guest, user)
         setUser(user);
         

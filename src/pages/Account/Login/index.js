@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/auth";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const { login } = useContext(AuthContext);
