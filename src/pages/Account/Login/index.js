@@ -4,7 +4,6 @@ import { AuthContext } from "../../../contexts/auth";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const { login } = useContext(AuthContext);
@@ -82,12 +81,13 @@ const styles = StyleSheet.create({
     borderColor: "#CDCDD2",
     backgroundColor: "#E7E4E4",
     color: '#000',
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   editableInput: {
     borderWidth: 2,
     borderColor: "#CDCDD2",
-    paddingLeft: 8
+    paddingLeft: 8,
+    marginVertical: 4,
   },
   loginBtn: {
     marginTop: 10,
@@ -98,15 +98,15 @@ const styles = StyleSheet.create({
   },
   loginBtnText: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    textAlign: "center",
     color: "#fff",
   },
   register: {
-    marginTop: 40,
+    marginTop: 20,
     alignSelf: "center",
   },
   registerLink: { 
-    color: "rgba(20,119,248,1)" 
+    color: "rgba(20,119,248,1)", 
   },
 })
 
