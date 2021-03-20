@@ -51,7 +51,7 @@ export const AuthProvider = ({children}) => {
             console.log('AuthProvider: Unhandled exception on login');            
             Alert.alert(
                 "Erro",
-                "Dados inconsistentes!",
+                "Usuário inexistente!",
                 [
                     { text: "OK", onPress: () => {}}
                 ],

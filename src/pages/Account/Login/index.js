@@ -1,31 +1,27 @@
-import React, {useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Image, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { AuthContext } from "../../../contexts/auth";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from '@react-navigation/native';
+import { useForm } from "react-hook-form";
 
 const Login = ({ navigation }) => {
   const { login } = useContext(AuthContext);
 
   const insets = useSafeAreaInsets();
 
-  const [user, setUser] = useState({
-    email: undefined,
-    password: undefined,
-  });
+  const { register, setValue, handleSubmit, errors } = useForm();
 
-  function handleInputChange(inputName, inputValue) {
-    setUser(state => ({
-      ...state,
-      [inputName]: inputValue
-    }))
-  }
+  useEffect(() => {
+    register({ name: 'email' }, { required: true });
+    register({ name: 'password' }, { required: true, minLength: 5, maxLength: 255 });
+  }, [register])
 
-  function handleLogin() {
-    login(user);
-  }
+  function onSubmit(data) {
+    console.log('Form Data', data);
+    login(data);
+  };
 
   function handleNavigationToAccountRegister() {
     navigation.navigate('Conta', { screen: 'Registrar', initial: false })
@@ -51,17 +47,20 @@ const Login = ({ navigation }) => {
             placeholderTextColor="#999"
             autoCompleteType="email"
             autoCapitalize="none"
-            onChangeText={(value) => handleInputChange('email', value)}
+            onChangeText={text => setValue('email', text, true)}
           />
+          {errors.email && errors.email.type === "required" && <Text style={styles.errorMessage}>O campo de e-mail é obrigatório</Text>}
           <Text>Sua Senha</Text>
           <TextInput
             style={styles.editableInput}
             placeholderTextColor="#999"
             secureTextEntry={true}
-            onChangeText={(value) => handleInputChange('password', value)}
+            onChangeText={text => setValue('password', text, true)}
           />
+          {errors.password && errors.password.type === "required" && <Text style={styles.errorMessage}>O campo de senha é obrigatório</Text>}
+          {errors.password && (errors.password.type === "minLength" || errors.password.type === "maxLength") && <Text style={styles.errorMessage}>O campo de senha deve conter entre 5 e 255 caracteres</Text>}
 
-          <TouchableOpacity onPress={handleLogin} style={styles.loginBtn}>
+          <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.loginBtn}>
             <Text style={styles.loginBtnText}>Entrar</Text>
           </TouchableOpacity>
           <Text style={styles.register}>Ainda não tem uma conta?
@@ -123,7 +122,11 @@ const styles = StyleSheet.create({
   registerLink: {
     color: "rgba(20,119,248,1)",
   },
+  errorMessage: {
+    color: 'red',
+    fontSize: 11,
+    marginBottom: 4
+  }
 })
-
 
 export default Login;
