@@ -34,7 +34,7 @@ const ListTypeOfCvlis = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={{
-            backgroundColor: "rgba(20,119,248,0.8)",
+            backgroundColor: "#fff",
             height: 125,
             width: '40%',
             maxWidth: 160,
@@ -54,7 +54,7 @@ const ListTypeOfCvlis = () => {
               fontFamily: "Montserrat_600SemiBold",
               fontSize: 13,
               width: "90%",
-              color: "#fff",
+              color: "rgba(20,119,248,0.8)",
               textAlign: "center",
               marginTop: 2
             }}
