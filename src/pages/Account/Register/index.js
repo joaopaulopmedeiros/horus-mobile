@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Image, TextInput, TouchableOpacity, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import Header from "../../../components/Header";
 import { AuthContext } from "../../../contexts/auth";
@@ -9,19 +9,44 @@ import { TextInputMask } from 'react-native-masked-text';
 import { useForm } from 'react-hook-form';
 
 const AccountRegister = ({ navigation }) => {
-    const { logup } = useContext(AuthContext);
+    const { signup } = useContext(AuthContext);
 
     const { register, setValue, handleSubmit, errors } = useForm();
+
+    const [cpfMask, setCpfMask] = useState(null);
+    const [phoneMask, setPhoneMask] = useState(null);
+    const [role, setRole] = useState(null);
+
+    useEffect(() => {
+        register({ name: 'name' }, { required: true });
+        register({ name: 'email' }, { required: true });
+        register({ name: 'cpf' }, { required: true });
+        register({ name: 'phone' }, { required: true });
+        register({ name: 'password' }, { required: true, minLength: 5, maxLength: 255 });
+        register({ name: 'password_confirmation' }, { required: true, minLength: 5, maxLength: 255 });
+        register({ name: 'role' }, { required: true });
+    }, [register]);
+
+    useEffect(() => setRole("1"), []);
+    setValue('role', role, true);
 
     const insets = useSafeAreaInsets();
 
     const [checked, setChecked] = useState(false);
 
-    function onSubmit(data) {
-        if (!checked) return;
+    async function onSubmit(data) {
+        
+        if (!checked) {
+            console.log('chegou')
+            return
+        };
+
+        const user = { ...data, role };
+
+        console.log(user);
 
         try {
-            logup(data);
+            await signup(user);
 
             Alert.alert(
                 "Sucesso",
@@ -62,15 +87,18 @@ const AccountRegister = ({ navigation }) => {
                     <View
                         style={styles.container}
                     >
-                        <Text>Primeiro e Último Nome</Text>
+                        <Text>Seu Nome</Text>
                         <TextInput
                             style={styles.editableInput}
                             placeholderTextColor="#999"
+                            placeholder="Fulano da Silva"
                             autoCompleteType="name"
                             autoCapitalize="words"
                             onChangeText={text => setValue('name', text, true)}
                         />
-                        <Text>Seu Email</Text>
+                        {errors.name && errors.name.type === "required" && <Text style={styles.errorMessage}>O campo de nome é obrigatório</Text>}
+
+                        <Text>Seu E-mail</Text>
                         <TextInput
                             style={styles.editableInput}
                             placeholderTextColor="#999"
@@ -79,6 +107,8 @@ const AccountRegister = ({ navigation }) => {
                             autoCapitalize="none"
                             onChangeText={text => setValue('email', text, true)}
                         />
+                        {errors.email && errors.email.type === "required" && <Text style={styles.errorMessage}>O campo de e-mail é obrigatório</Text>}
+
                         <Text>Seu CPF</Text>
                         <TextInputMask
                             type={'cpf'}
@@ -87,8 +117,14 @@ const AccountRegister = ({ navigation }) => {
                             placeholder="XXX.XXX.XXX-XX"
                             autoCapitalize="words"
                             multiline={false}
-                            onChangeText={text => setValue('cpf', text, true)}
+                            value={cpfMask}
+                            onChangeText={text => {
+                                setValue('cpf', text, true);
+                                setCpfMask(text);
+                            }}
                         />
+                        {errors.cpf && errors.cpf.type === "required" && <Text style={styles.errorMessage}>O campo de CPF é obrigatório</Text>}
+
                         <Text>Seu Número de Celular</Text>
                         <TextInputMask
                             style={styles.editableInput}
@@ -97,13 +133,19 @@ const AccountRegister = ({ navigation }) => {
                             autoCapitalize="words"
                             multiline={false}
                             type={'cel-phone'}
+                            value={phoneMask}
                             options={{
                                 maskType: 'BRL',
                                 withDDD: true,
                                 dddMask: '(99) '
                             }}
-                            onChangeText={text => setValue('phone', text, true)}
+                            onChangeText={text => {
+                                setValue('phone', text, true);
+                                setPhoneMask(text);
+                            }}
                         />
+                        {errors.phone && errors.phone.type === "required" && <Text style={styles.errorMessage}>O campo de número de celular é obrigatório</Text>}
+
                         <Text>Sua Senha</Text>
                         <TextInput
                             style={styles.editableInput}
@@ -111,13 +153,17 @@ const AccountRegister = ({ navigation }) => {
                             secureTextEntry={true}
                             onChangeText={text => setValue('password', text, true)}
                         />
+                        {errors.password && errors.password.type === "required" && <Text style={styles.errorMessage}>O campo de senha é obrigatório</Text>}
+
                         <Text>Confirme Sua Senha</Text>
                         <TextInput
                             style={styles.editableInput}
                             placeholderTextColor="#999"
-                            secureTextEntry={true}            
+                            secureTextEntry={true}
                             onChangeText={text => setValue('password_confirmation', text, true)}
                         />
+                        {errors.password_confirmation && errors.password_confirmation.type === "required" && <Text style={styles.errorMessage}>O campo de confirmação de senha é obrigatório</Text>}
+
                         <RadioButton.Group onValueChange={newValue => setChecked(newValue)} value={checked}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <RadioButton color="rgba(20,119,248,1)" value={true} />
@@ -192,6 +238,11 @@ const styles = StyleSheet.create({
     registerLink: {
         color: "rgba(20,119,248,1)",
     },
+    errorMessage: {
+        color: 'red',
+        fontSize: 11,
+        marginBottom: 4
+    }
 })
 
 
