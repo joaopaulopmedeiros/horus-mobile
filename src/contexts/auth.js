@@ -26,7 +26,7 @@ export const AuthProvider = ({children}) => {
         loadStorageAuthData();
     }, []);
 
-    async function login(guest) {
+    async function signin(guest) {
         try {
             const response = await api.post('/auth/login', guest);
             const { user, access_token } = response.data;
@@ -60,7 +60,7 @@ export const AuthProvider = ({children}) => {
         }
     }
 
-    async function logout() {
+    async function signout() {
         try {
             await AsyncStorage.clear();
             setUser(null);
@@ -69,7 +69,7 @@ export const AuthProvider = ({children}) => {
         }
     }
 
-    async function register(guest) {
+    async function signup(guest) {
         console.log(guest, user)
         
         const response = await api.post('/auth/register', guest);
@@ -85,7 +85,7 @@ export const AuthProvider = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{loggedIn: !!user, user, login, logout, register}}>
+        <AuthContext.Provider value={{loggedIn: !!user, user, signin, signout, signout}}>
             {children}
         </AuthContext.Provider>
     );

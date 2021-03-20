@@ -8,13 +8,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import logoutIcon from '../../../../assets/logout.png'
 
 const Profile = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user, signout } = useContext(AuthContext);
 
     const insets = useSafeAreaInsets();
 
 
-    function handleLogout() {
-        logout();
+    function handleSignout() {
+        signout();
     }
 
     return (
@@ -66,7 +66,7 @@ const Profile = () => {
                         <Text style={styles.editButtonText}>Editar</Text>
                     </TouchableOpacity>
                     <View style={styles.logoutIconWrapper}>
-                        <TouchableOpacity onPress={handleLogout} >
+                        <TouchableOpacity onPress={handleSignout} >
                             <Image source={logoutIcon} delayPressIn={0} delayPressOut={0} activeOpacity={0.5} />
                         </TouchableOpacity>
                     </View>

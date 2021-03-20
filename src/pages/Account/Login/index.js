@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
 
 const Login = ({ navigation }) => {
-  const { login } = useContext(AuthContext);
+  const { signin } = useContext(AuthContext);
 
   const insets = useSafeAreaInsets();
 
@@ -16,11 +16,11 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     register({ name: 'email' }, { required: true });
     register({ name: 'password' }, { required: true, minLength: 5, maxLength: 255 });
-  }, [register])
+  }, [register]);
 
   function onSubmit(data) {
     console.log('Form Data', data);
-    login(data);
+    signin(data);
   };
 
   function handleNavigationToAccountRegister() {
