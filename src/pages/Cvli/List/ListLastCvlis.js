@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import api from "../../../services/api"
+import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import api from "../../../services/api";
 
-const ListLastCvlis = ({navigation}) => {
+
+const ListLastCvlis = ({ navigation }) => {
   const [cvlis, setCvlis] = useState(null);
 
   useEffect(() => loadCvlis(), []);
@@ -53,6 +54,7 @@ const ListLastCvlis = ({navigation}) => {
           >
             {cvlis.map(cvli => (
               <TouchableOpacity
+                key={cvli.id}
                 activeOpacity={1}
                 style={{
                   backgroundColor: "#fff",
@@ -95,7 +97,7 @@ const ListLastCvlis = ({navigation}) => {
                         marginBottom: 2,
                       }}
                       onPress={() => {
-                        navigation.navigate('Crimes', { screen: 'Detalhes',initial: false, params: { cvli: cvli } })
+                        navigation.navigate('Crimes', { screen: 'Detalhes', initial: false, params: { cvli: cvli } })
                       }}
                     >
                       <Text
@@ -152,7 +154,10 @@ const ListLastCvlis = ({navigation}) => {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          : <Text>Carregando...</Text>}
+          :
+          <View>
+            <ActivityIndicator size="large" color="rgba(20,119,248,0.8)" />
+          </View>}
       </View>
     </View>
   );
