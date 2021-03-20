@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from "react-native";
 import api from "../../../services/api";
 
 
@@ -18,36 +18,12 @@ const ListLastCvlis = ({ navigation }) => {
   }
 
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "30%",
-        height: 240,
-        justifyContent: "center",
-        paddingLeft: "8%",
-        paddingTop: "2%",
-        //backgroundColor: 'green'
-      }}
-    >
-      <Text
-        style={{
-          textTransform: "uppercase",
-          color: "rgba(20,119,248,0.8)",
-          fontFamily: "Montserrat_700Bold",
-        }}
-      >
-        Últimos Casos
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 16,
-          marginBottom: 32,
-          //backgroundColor: 'green',
-        }}
-      >
+    <View style={styles.wrapper}>
+      <Text style={styles.title}>Últimos Casos</Text>
+      <View style={styles.extraSpacing}>
         {cvlis != null
-          ? <ScrollView
+          ?
+          <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ minWidth: "100%", paddingRight: 10 }}
@@ -56,39 +32,13 @@ const ListLastCvlis = ({ navigation }) => {
               <TouchableOpacity
                 key={cvli.id}
                 activeOpacity={1}
-                style={{
-                  backgroundColor: "#fff",
-                  borderWidth: 2,
-                  borderColor: "#eee",
-                  height: 125,
-                  width: 280,
-                  borderRadius: 8,
-                  paddingHorizontal: 16,
-                  paddingTop: 20,
-                  paddingBottom: 16,
-                }}
+                style={styles.card}
               >
-                <Text
-                  style={{
-                    fontFamily: "Montserrat_600SemiBold",
-                    fontSize: 16,
-                    width: "90%",
-                    height: 24,
-                    color: "rgba(20,119,248,0.8)",
-                  }}
-                >
+                <Text style={styles.cvliTitle}>
                   {cvli.title}
                 </Text>
                 <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                  <Text
-                    style={{
-                      fontFamily: "Montserrat_500Medium",
-                      fontSize: 10,
-                      width: "62%",
-                      height: 46,
-                      color: "#77838F",
-                    }}
-                  >
+                  <Text style={styles.cvliDescription}>
                     {cvli.description}
                   </Text>
                   <View>
@@ -100,53 +50,21 @@ const ListLastCvlis = ({ navigation }) => {
                         navigation.navigate('Crimes', { screen: 'Detalhes', initial: false, params: { cvli: cvli } })
                       }}
                     >
-                      <Text
-                        style={{
-                          fontFamily: "Montserrat_500Medium",
-                          fontSize: 10,
-                          height: 24,
-                          color: "#fff",
-                          backgroundColor: "rgba(20,119,248,0.8)",
-                          paddingVertical: 3,
-                          paddingHorizontal: 6,
-                          borderRadius: 3,
-                        }}
-                      >
+                      <Text style={styles.btnGoToCvli}>
                         Ver Registro
-                  </Text>
+                      </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        borderColor: "#000",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: "Montserrat_500Medium",
-                          fontSize: 10,
-                          height: 22,
-                          color: "#000",
-                          paddingVertical: 3,
-                          paddingHorizontal: 6,
-                          borderWidth: 1,
-                          borderRadius: 3,
-                        }}
-                      >
+                    <TouchableOpacity style={styles.border}>
+                      <Text style={styles.btnDenuntiateCvli}>
                         Denunciar
                   </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
                 {cvli.verified == 1 &&
-                  <View style={{ marginTop: 4, flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={styles.verifiedWrapper}>
                     <Image source={require("../../../../assets/verified.png")} />
-                    <Text
-                      style={{
-                        fontFamily: "Montserrat_500Medium",
-                        fontSize: 10,
-                        marginLeft: 4
-                      }}
-                    >
+                    <Text style={styles.verifiedText}>
                       Verificado
                     </Text>
                   </View>
@@ -162,5 +80,84 @@ const ListLastCvlis = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: "100%",
+    height: "30%",
+    height: 240,
+    justifyContent: "center",
+    paddingLeft: "8%",
+    paddingTop: "2%",
+  },
+  title: {
+    textTransform: "uppercase",
+    color: "rgba(20,119,248,0.8)",
+    fontFamily: "Montserrat_700Bold",
+  },
+  extraSpacing: {
+    flexDirection: "row",
+    marginTop: 16,
+    marginBottom: 32,
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderWidth: 2,
+    borderColor: "#eee",
+    height: 125,
+    width: 280,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 16,
+  },
+  cvliTitle: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 16,
+    width: "90%",
+    height: 24,
+    color: "rgba(20,119,248,0.8)",
+  },
+  cvliDescription: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 10,
+    width: "62%",
+    height: 46,
+    color: "#77838F",
+  },
+  btnGoToCvli: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 10,
+    height: 24,
+    color: "#fff",
+    backgroundColor: "rgba(20,119,248,0.8)",
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    borderRadius: 3,
+  },
+  btnDenuntiateCvli: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 10,
+    height: 22,
+    color: "#000",
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    borderWidth: 1,
+    borderRadius: 3,
+  },
+  verifiedWrapper: {
+    marginTop: 4,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  verifiedText: {
+    fontFamily: "Montserrat_500Medium",
+    fontSize: 10,
+    marginLeft: 4
+  },
+  border: {
+    borderColor: "#000",
+  },
+})
 
 export default ListLastCvlis;
