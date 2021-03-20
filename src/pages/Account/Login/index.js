@@ -41,7 +41,7 @@ const Login = ({ navigation }) => {
         <View
           style={styles.container}
         >
-          <Text>Seu Email</Text>
+          <Text>Seu E-mail</Text>
           <TextInput
             style={styles.editableInput}
             placeholderTextColor="#999"
