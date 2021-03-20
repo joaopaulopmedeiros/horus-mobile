@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import api from "../../../services/api"
 
-const ListLastCvlis = () => {
+const ListLastCvlis = ({navigation}) => {
+  const [cvlis, setCvlis] = useState(null);
+
+  useEffect(() => loadCvlis(), []);
+
+  function loadCvlis() {
+    api.get('/cvlis').then(response => {
+      console.log(response.data.data);
+      setCvlis(response.data.data);
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
   return (
     <View
       style={{
@@ -31,200 +45,114 @@ const ListLastCvlis = () => {
           //backgroundColor: 'green',
         }}
       >
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ minWidth: "100%", paddingRight: 10 }}
-        >
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              backgroundColor: "#fff",
-              borderWidth: 2,
-              borderColor: "#eee",
-              height: 125,
-              width: 280,
-              borderRadius: 8,
-              paddingHorizontal: 16,
-              paddingTop: 20,
-              paddingBottom: 16,
-            }}
+        {cvlis != null
+          ? <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ minWidth: "100%", paddingRight: 10 }}
           >
-            <Text
-              style={{
-                fontFamily: "Montserrat_600SemiBold",
-                fontSize: 16,
-                width: "90%",
-                height: 24,
-                color: "rgba(20,119,248,0.8)",
-              }}
-            >
-              Fiat Uno Roubado
-            </Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-              <Text
+            {cvlis.map(cvli => (
+              <TouchableOpacity
+                activeOpacity={1}
                 style={{
-                  fontFamily: "Montserrat_500Medium",
-                  fontSize: 10,
-                  width: "62%",
-                  height: 46,
-                  color: "#77838F",
+                  backgroundColor: "#fff",
+                  borderWidth: 2,
+                  borderColor: "#eee",
+                  height: 125,
+                  width: 280,
+                  borderRadius: 8,
+                  paddingHorizontal: 16,
+                  paddingTop: 20,
+                  paddingBottom: 16,
                 }}
               >
-                Lorem Ipsum is simply text of the printing and typesetting
-                industry.
-              </Text>
-              <View>
-                <TouchableOpacity
+                <Text
                   style={{
-                    marginBottom: 2,
+                    fontFamily: "Montserrat_600SemiBold",
+                    fontSize: 16,
+                    width: "90%",
+                    height: 24,
+                    color: "rgba(20,119,248,0.8)",
                   }}
                 >
+                  {cvli.title}
+                </Text>
+                <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                   <Text
                     style={{
                       fontFamily: "Montserrat_500Medium",
                       fontSize: 10,
-                      height: 24,
-                      color: "#fff",
-                      backgroundColor: "rgba(20,119,248,0.8)",
-                      paddingVertical: 3,
-                      paddingHorizontal: 6,
-                      borderRadius: 3,
+                      width: "62%",
+                      height: 46,
+                      color: "#77838F",
                     }}
                   >
-                    Ver Registro
+                    {cvli.description}
                   </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    borderColor: "#000",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Montserrat_500Medium",
-                      fontSize: 10,
-                      height: 22,
-                      color: "#000",
-                      paddingVertical: 3,
-                      paddingHorizontal: 6,
-                      borderWidth: 1,
-                      borderRadius: 3,
-                    }}
-                  >
-                    Denunciar
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        marginBottom: 2,
+                      }}
+                      onPress={() => {
+                        navigation.navigate('Crimes', { screen: 'Detalhes',initial: false, params: { cvli: cvli } })
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Montserrat_500Medium",
+                          fontSize: 10,
+                          height: 24,
+                          color: "#fff",
+                          backgroundColor: "rgba(20,119,248,0.8)",
+                          paddingVertical: 3,
+                          paddingHorizontal: 6,
+                          borderRadius: 3,
+                        }}
+                      >
+                        Ver Registro
                   </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{marginTop: 4, flexDirection: 'row', alignItems: 'center'}}>
-              <Image source={require("../../../../assets/verified.png")} />
-              <Text
-                style={{
-                  fontFamily: "Montserrat_500Medium",
-                  fontSize: 10,
-                  marginLeft: 4
-                }}
-              >
-                Verificado
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              backgroundColor: "#fff",
-              borderWidth: 2,
-              borderColor: "#eee",
-              height: 125,
-              width: 280,
-              borderRadius: 8,
-              paddingHorizontal: 16,
-              paddingTop: 20,
-              paddingBottom: 16,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat_600SemiBold",
-                fontSize: 16,
-                width: "90%",
-                height: 24,
-                color: "rgba(20,119,248,0.8)",
-              }}
-            >
-              Fiat Uno Roubado
-            </Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-              <Text
-                style={{
-                  fontFamily: "Montserrat_500Medium",
-                  fontSize: 10,
-                  width: "62%",
-                  height: 46,
-                  color: "#77838F",
-                }}
-              >
-                Lorem Ipsum is simply text of the printing and typesetting
-                industry.
-              </Text>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    marginBottom: 2,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Montserrat_500Medium",
-                      fontSize: 10,
-                      height: 24,
-                      color: "#fff",
-                      backgroundColor: "rgba(20,119,248,0.8)",
-                      paddingVertical: 3,
-                      paddingHorizontal: 6,
-                      borderRadius: 3,
-                    }}
-                  >
-                    Ver Registro
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        borderColor: "#000",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Montserrat_500Medium",
+                          fontSize: 10,
+                          height: 22,
+                          color: "#000",
+                          paddingVertical: 3,
+                          paddingHorizontal: 6,
+                          borderWidth: 1,
+                          borderRadius: 3,
+                        }}
+                      >
+                        Denunciar
                   </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    borderColor: "#000",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Montserrat_500Medium",
-                      fontSize: 10,
-                      height: 22,
-                      color: "#000",
-                      paddingVertical: 3,
-                      paddingHorizontal: 6,
-                      borderWidth: 1,
-                      borderRadius: 3,
-                    }}
-                  >
-                    Denunciar
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{marginTop: 4, flexDirection: 'row', alignItems: 'center'}}>
-              <Image source={require("../../../../assets/verified.png")} />
-              <Text
-                style={{
-                  fontFamily: "Montserrat_500Medium",
-                  fontSize: 10,
-                  marginLeft: 4
-                }}
-              >
-                Verificado
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </ScrollView>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                {cvli.verified == 1 &&
+                  <View style={{ marginTop: 4, flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={require("../../../../assets/verified.png")} />
+                    <Text
+                      style={{
+                        fontFamily: "Montserrat_500Medium",
+                        fontSize: 10,
+                        marginLeft: 4
+                      }}
+                    >
+                      Verificado
+                    </Text>
+                  </View>
+                }
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          : <Text>Carregando...</Text>}
       </View>
     </View>
   );

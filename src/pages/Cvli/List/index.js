@@ -6,14 +6,14 @@ import { Container } from "../../../components/Container";
 import ListLastCvlis from "./ListLastCvlis";
 import ListTypeOfCvlis from "./ListTypeOfCvlis";
 
-const CvliList = () => {
+const CvliList = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
   return (
     <Container marginTop={insets.top}>
       <Header title="Crimes Registrados" />
       <ScrollView>
-        <ListLastCvlis />
+        <ListLastCvlis navigation={navigation} />
         <ListTypeOfCvlis />
       </ScrollView>
     </Container>
