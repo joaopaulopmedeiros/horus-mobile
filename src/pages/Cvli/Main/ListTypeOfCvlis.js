@@ -51,9 +51,11 @@ const styles = StyleSheet.create({
   },
   cvlisWrapper: {
     flexDirection: "row",
+    justifyContent:'space-around',
     flexWrap: 'wrap',
     marginTop: 16,
     marginBottom: 32,
+    marginLeft: -10,
   },
   card: {
     backgroundColor: "#fff",
