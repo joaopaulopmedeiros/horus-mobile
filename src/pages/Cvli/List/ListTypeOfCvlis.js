@@ -22,7 +22,7 @@ const ListTypeOfCvlis = ({ navigation }) => {
             activeOpacity={1}
             style={styles.card}
             onPress={() => {
-              navigation.navigate('Crimes', { screen: 'ListaPorCategoria', initial: false })
+              navigation.navigate('Crimes', { screen: 'ListaPorTipo', initial: false })
             }}
           >
             <Image source={item.imgPath} />
