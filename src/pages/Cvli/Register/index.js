@@ -202,8 +202,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "rgba(20,119,248,0.8)",
     borderRadius: 3,
-    width: "25%",
-    alignSelf: "center",
+    width: "50%",
+    maxWidth: 130,
   },
   submitBtnText: {
     paddingVertical: 8,
