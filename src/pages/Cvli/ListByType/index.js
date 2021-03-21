@@ -25,25 +25,20 @@ const CvliListByTipe = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.listItem}>
-            <Text class={styles.cvliTitle}>{item.title}</Text>
-            <Text class={styles.cvliTitle}>{item.description}</Text>
-            {item.verified == 1 &&
-                <View style={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'row'
-                }}>
-                    <Text>
-                        <VerifiedIcon />
-                    </Text>
-                    <Text style={{
-                        fontFamily: "Montserrat_500Medium",
-                        fontSize: 10,
-                        marginLeft: 2,
-                        color: '#77838F'
-                    }}>Verificado</Text>
-                </View>
-            }
+            <View style={{ paddingBottom: 8, borderBottomColor: '#CDCDD2', borderBottomWidth: 2 }}>
+                <Text style={styles.cvliTitle}>{item.title}</Text>
+            </View>
+            <View style={{ paddingTop: 8}}>
+                <Text style={styles.cvliDescription}>{item.description}</Text>
+                {item.verified == 1 &&
+                    <View style={styles.verifiedWrapper}>
+                        <Text>
+                            <VerifiedIcon />
+                        </Text>
+                        <Text style={styles.verifiedText}>Verificado</Text>
+                    </View>
+                }
+            </View>
         </View>
     );
 
@@ -74,10 +69,34 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         marginTop: 20,
         padding: 30,
-        borderRadius: 5
+        borderRadius: 5,
+        shadowOffset:{  width: 10,  height: 10,  },
+        shadowColor: 'black',
+        shadowOpacity: 1.0,
     },
     cvliTitle: {
-        fontSize: 40,
+        fontFamily: "Montserrat_700Bold",
+        fontSize: 16,
+        width: "90%",
+        height: 24,
+        color: "rgba(20,119,248,0.8)",
+    },
+    cvliDescription: {
+        fontFamily: "Montserrat_500Medium",
+        fontSize: 10,
+        height: 40,
+        color: "#77838F",
+    },
+    verifiedWrapper: {
+        marginTop: 3,
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    verifiedText: {
+        fontFamily: "Montserrat_500Medium",
+        fontSize: 10,
+        marginLeft: 2,
+        color: '#77838F'
     },
 })
 
