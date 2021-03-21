@@ -7,13 +7,17 @@ import api from "../../../services/api";
 
 import VerifiedIcon from "../../../styles/icons/index";
 
-const CvliListByTipe = () => {
+const CvliListByTipe = ({route}) => {
     const [cvlis, setCvlis] = useState(null);
 
     useEffect(() => loadCvlis(), []);
 
     function loadCvlis() {
-        api.get('/cvlis').then(response => {
+        api.get('/cvlis', {
+            params: {
+              type: route.params.type
+            }
+          }).then(response => {
             console.log(response.data.data);
             setCvlis(response.data.data);
         }).catch(error => {
