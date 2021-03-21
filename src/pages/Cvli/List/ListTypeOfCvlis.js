@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from "react-native";
 
-const ListTypeOfCvlis = () => {
+const ListTypeOfCvlis = ({ navigation }) => {
   const typeOfCvlis = [
     { id: 1, title: 'Roubo de Veículos', imgPath: require("../../../../assets/roubo-veiculos.png") },
     { id: 2, title: 'Furtos', imgPath: require("../../../../assets/furto.png") },
@@ -18,14 +18,17 @@ const ListTypeOfCvlis = () => {
       <View style={styles.cvlisWrapper}>
         {typeOfCvlis.map(item => (
           <TouchableOpacity
-            key={item.id} 
+            key={item.id}
             activeOpacity={1}
             style={styles.card}
+            onPress={() => {
+              navigation.navigate('Crimes', { screen: 'ListaPorCategoria', initial: false })
+            }}
           >
-            <Image source={item.imgPath}/>
+            <Image source={item.imgPath} />
             <Text style={styles.cardTitle}>
               {item.title}
-          </Text>
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

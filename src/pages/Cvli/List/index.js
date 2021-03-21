@@ -14,7 +14,7 @@ const CvliList = ({navigation}) => {
       <Header title="Crimes Registrados" />
       <ScrollView>
         <ListLastCvlis navigation={navigation} />
-        <ListTypeOfCvlis />
+        <ListTypeOfCvlis navigation={navigation} />
       </ScrollView>
     </Container>
   );
