@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
     height: "30%",
-    height: 540,
+    height: 460,
     paddingLeft: "8%",
     paddingTop: "2%",
   },
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexWrap: 'wrap',
     marginTop: 16,
-    marginBottom: 32,
     marginLeft: -10,
   },
   unactiveCard: {

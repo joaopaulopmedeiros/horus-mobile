@@ -57,7 +57,7 @@ const ListLastCvlis = ({ navigation }) => {
                     <TouchableOpacity style={styles.border}>
                       <Text style={styles.btnDenuntiateCvli}>
                         Denunciar
-                  </Text>
+                    </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
