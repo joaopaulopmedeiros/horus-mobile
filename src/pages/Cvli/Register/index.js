@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
-import { Alert, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
+import { Alert, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Aler } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
@@ -16,11 +16,12 @@ import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
+import api from "../../../services/api";
 
 const CvliRegister = ({ navigation }) => {
   const insets = useSafeAreaInsets();
 
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, user } = useContext(AuthContext);
 
   const [agreed, setAgreed] = useState(false);
   const [statusOfReportedPerson, setStatusOfReportedPerson] = useState(false);
@@ -28,6 +29,8 @@ const CvliRegister = ({ navigation }) => {
   const [typeOfCvli, setTypeOfCvli] = useState(null);
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [title, setTitle] = useState(null);
 
   const [currentRegion, setCurrentRegion] = useState(null);
   const [GPSIsGranted, setGPSIsGranted] = useState(null);
@@ -44,6 +47,7 @@ const CvliRegister = ({ navigation }) => {
     setLatitude(event.nativeEvent.coordinate.latitude);
     setLongitude(event.nativeEvent.coordinate.longitude);
   }
+
   async function loadPosition() {
     try {
       const { granted } = await requestPermissionsAsync();
@@ -86,14 +90,6 @@ const CvliRegister = ({ navigation }) => {
     }
   }
 
-  useEffect(() => {
-    loadPosition();
-  }, []);
-
-  useEffect(() => {
-    console.log(typeOfCvli);
-  }, [typeOfCvli]);
-
   function emitAlert() {
     Alert.alert(
       "Aviso",
@@ -104,6 +100,77 @@ const CvliRegister = ({ navigation }) => {
       { cancelable: false }
     );
   }
+
+  async function handleSubmit() {
+
+    const data = {
+      latitude,
+      longitude,
+      cvli_type_id: typeOfCvli,
+      title,
+      description,
+      user_id: user.id
+    };
+
+    const someItemIsEmpty = Object.values(data).some(x => (x == null || x == '' || x == undefined));
+
+    if (someItemIsEmpty || agreed == false) {
+      Alert.alert(
+        "Erro",
+        "Dados inconsistentes! Preencha todos os campos corretamente",
+        [
+          { text: "OK", onPress: () => { } }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+
+    try {
+      await api.post('/cvlis', data);
+
+      Alert.alert(
+        "Sucesso!",
+        "Crime registrado.",
+        [
+          { text: "OK", onPress: () => { } }
+        ],
+        { cancelable: false }
+      );
+      
+      setAgreed(false);
+      setStatusOfReportedPerson(false);
+      setOccuredNow(true);
+      setTypeOfCvli(null);
+      setDate(null);
+      setTime(null);
+      setDescription(null);
+      setTitle(null);
+      setLatitude(null);
+      setLongitude(null);
+
+    } catch(error) {
+      Alert.alert(
+        "Erro interno do servidor",
+        "Tente novamente mais tarde.",
+        [
+          { text: "OK", onPress: () => { } }
+        ],
+        { cancelable: false }
+      );
+      console.log(error)
+    }
+
+    console.log(data);
+  }
+
+  useEffect(() => {
+    loadPosition();
+  }, []);
+
+  useEffect(() => {
+    console.log(typeOfCvli);
+  }, [typeOfCvli]);
 
   useFocusEffect(
     useCallback(() => {
@@ -225,7 +292,24 @@ const CvliRegister = ({ navigation }) => {
                 paddingBottom: 80
               }}
               multiline={true}
-              maxLength={70} />
+              maxLength={70}
+              onChangeText={text => setDescription(text)} />
+          </View>
+          <View style={{ marginTop: 24 }}>
+            <Text style={{ color: '#77838F' }}>Adicione um título ao ocorrido</Text>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                borderColor: "#CDCDD2",
+                color: '#77838F',
+                backgroundColor: 'white',
+                paddingLeft: 8,
+                marginVertical: 6,
+                width: '90%',
+                maxWidth: 320,
+              }}
+              maxLength={70}
+              onChangeText={text => setTitle(text)} />
           </View>
           <View style={{
             paddingLeft: 8,
@@ -263,7 +347,7 @@ const CvliRegister = ({ navigation }) => {
               }
             </MapView>
           </View>
-          <TouchableOpacity style={styles.submitBtn}>
+          <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
             <Text style={styles.submitBtnText}>Registrar</Text>
           </TouchableOpacity>
         </View>
