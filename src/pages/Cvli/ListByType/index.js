@@ -7,7 +7,7 @@ import api from "../../../services/api";
 
 import VerifiedIcon from "../../../styles/icons/index";
 
-const CvliListByTipe = ({ route }) => {
+const CvliListByTipe = ({ navigation, route }) => {
     const [cvlis, setCvlis] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const CvliListByTipe = ({ route }) => {
             }
         }).then(response => {
             console.log(response.data.data);
-            if(response.data.data.length != 0) setCvlis(response.data.data);
+            if (response.data.data.length != 0) setCvlis(response.data.data);
             setLoading(false);
         }).catch(error => {
             console.log(error);
@@ -31,7 +31,7 @@ const CvliListByTipe = ({ route }) => {
     const insets = useSafeAreaInsets();
 
     const renderItem = ({ item }) => (
-        <View style={styles.listItem} key={item.id}>
+        <TouchableOpacity style={styles.listItem} key={item.id} onPress={() => navigation.navigate('Crimes', { screen: 'Detalhes', initial: false, params: { cvli: item } })}>
             <View style={{ paddingBottom: 8, borderBottomColor: '#CDCDD2', borderBottomWidth: 2 }}>
                 <Text style={styles.cvliTitle}>{item.title}</Text>
             </View>
@@ -46,7 +46,7 @@ const CvliListByTipe = ({ route }) => {
                     </View>
                 }
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -70,7 +70,7 @@ const CvliListByTipe = ({ route }) => {
                             />
                             :
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{color: 'black'}}>Não há crimes registrados para essa categoria.</Text>
+                                <Text style={{ color: 'black' }}>Não há crimes registrados para essa categoria.</Text>
                             </View>
                     )
                 ]
