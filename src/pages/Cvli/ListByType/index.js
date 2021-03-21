@@ -31,7 +31,7 @@ const CvliListByTipe = ({ navigation, route }) => {
     const insets = useSafeAreaInsets();
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.listItem} key={item.id} onPress={() => navigation.navigate('Crimes', { screen: 'Detalhes', initial: false, params: { cvli: item } })}>
+        <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('Crimes', { screen: 'Detalhes', initial: false, params: { cvli: item } })}>
             <View style={{ paddingBottom: 8, borderBottomColor: '#CDCDD2', borderBottomWidth: 2 }}>
                 <Text style={styles.cvliTitle}>{item.title}</Text>
             </View>
