@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { Alert, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
@@ -19,6 +19,7 @@ const CvliRegister = ({ navigation }) => {
   const [occuredNow, setOccuredNow] = useState(true);
   const [typeOfCvli, setTypeOfCvli] = useState(null);
   const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
 
   function handleNavigationToAccountLogin() {
     navigation.navigate('Conta', { screen: 'Login', initial: false });
@@ -72,13 +73,13 @@ const CvliRegister = ({ navigation }) => {
             <View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton color="rgba(20,119,248,1)" value={1} />
-                <Text style={{color: '#77838F'}}>
+                <Text style={{ color: '#77838F' }}>
                   Presenciei um crime
               </Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton color="rgba(20,119,248,1)" value={2} />
-                <Text style={{color: '#77838F'}}>
+                <Text style={{ color: '#77838F' }}>
                   Fui vítima
               </Text>
               </View>
@@ -97,25 +98,67 @@ const CvliRegister = ({ navigation }) => {
               <Text style={occuredNow ? { color: 'black', textAlign: 'center' } : { color: 'white', textAlign: 'center' }}>NÃO</Text>
             </TouchableOpacity>
           </View>
+          {occuredNow == false &&
+            <View>
+              <View style={{ marginTop: 24 }}>
+                <Text style={{ color: '#77838F' }}>Informe a data do ocorrido</Text>
+                <TextInputMask
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#CDCDD2",
+                    backgroundColor: 'white',
+                    paddingLeft: 8,
+                    marginVertical: 6,
+                    width: 130
+                  }}
+                  placeholder="DD/MM/YYYY"
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY'
+                  }}
+                  value={date}
+                  onChangeText={text => occuredNow == true ? setDate(null) : setDate(text)}
+                />
+              </View>
+              <View style={{ marginTop: 12 }}>
+                <Text style={{ color: '#77838F' }}>Informe o horário do ocorrido</Text>
+                <TextInputMask
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#CDCDD2",
+                    backgroundColor: 'white',
+                    paddingLeft: 8,
+                    marginVertical: 6,
+                    width: 130
+                  }}
+                  placeholder="HH:MM"
+                  type={'datetime'}
+                  options={{
+                    format: 'HH:mm'
+                  }}
+                  value={time}
+                  onChangeText={text => occuredNow == true ? setTime(null) : setTime(text)}
+                />
+              </View>
+            </View>
+          }
           <View style={{marginTop: 24}}>
-            <Text style={{color:'#77838F' }}>Informe a data do ocorrido</Text>
-            <TextInputMask
+            <Text  style={{ color: '#77838F' }}>Descreva o ocorrido</Text>
+            <TextInput
               style={{
                 borderWidth: 1,
                 borderColor: "#CDCDD2",
+                color: '#77838F',
                 backgroundColor: 'white',
                 paddingLeft: 8,
                 marginVertical: 6,
-                width: 130
+                width: '90%',
+                maxWidth: 320,
+                height: 140,
+                paddingBottom: 80
               }}
-              placeholder="DD/MM/YYYY"
-              type={'datetime'}
-              options={{
-                format: 'DD/MM/YYYY'
-              }}
-              value={date}
-              onChangeText={text => setDate(text)}
-            />
+              multiline={true}
+              maxLength={70} />
           </View>
         </View>
       </ScrollView>
