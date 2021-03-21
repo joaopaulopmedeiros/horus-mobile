@@ -54,7 +54,7 @@ const CvliListByTipe = ({ navigation, route }) => {
             <Header title="Crimes Registrados" />
             {loading === true
                 ?
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.centralize}>
                     <ActivityIndicator size="large" color="rgba(20,119,248,0.8)" />
                 </View> :
                 [
@@ -69,8 +69,8 @@ const CvliListByTipe = ({ navigation, route }) => {
                                 keyExtractor={item => item.id.toString()}
                             />
                             :
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ color: 'black' }}>Não há crimes registrados para essa categoria.</Text>
+                            <View style={styles.centralize}>
+                                <Text>Não há crimes registrados para essa categoria.</Text>
                             </View>
                     )
                 ]
@@ -120,6 +120,11 @@ const styles = StyleSheet.create({
         fontSize: 10,
         marginLeft: 2,
         color: '#77838F'
+    },
+    centralize: { 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center' 
     },
 })
 
