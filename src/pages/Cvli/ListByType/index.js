@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, TextInput, StyleSheet, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Image, TextInput, StyleSheet, Text, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,32 +7,35 @@ import api from "../../../services/api";
 
 import VerifiedIcon from "../../../styles/icons/index";
 
-const CvliListByTipe = ({route}) => {
+const CvliListByTipe = ({ route }) => {
     const [cvlis, setCvlis] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => loadCvlis(), []);
 
     function loadCvlis() {
         api.get('/cvlis', {
             params: {
-              type: route.params.type
+                type: route.params.type
             }
-          }).then(response => {
+        }).then(response => {
             console.log(response.data.data);
-            setCvlis(response.data.data);
+            if(response.data.data.length != 0) setCvlis(response.data.data);
+            setLoading(false);
         }).catch(error => {
             console.log(error);
+            setLoading(false);
         })
     }
 
     const insets = useSafeAreaInsets();
 
     const renderItem = ({ item }) => (
-        <View style={styles.listItem}>
+        <View style={styles.listItem} key={item.id}>
             <View style={{ paddingBottom: 8, borderBottomColor: '#CDCDD2', borderBottomWidth: 2 }}>
                 <Text style={styles.cvliTitle}>{item.title}</Text>
             </View>
-            <View style={{ paddingTop: 8}}>
+            <View style={{ paddingTop: 8 }}>
                 <Text style={styles.cvliDescription}>{item.description}</Text>
                 {item.verified == 1 &&
                     <View style={styles.verifiedWrapper}>
@@ -49,13 +52,29 @@ const CvliListByTipe = ({route}) => {
     return (
         <Container marginTop={insets.top}>
             <Header title="Crimes Registrados" />
-            <FlatList
-                style={styles.wrapper}
-                contentContainerStyle={styles.list}
-                data={cvlis}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-            />
+            {loading === true
+                ?
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <ActivityIndicator size="large" color="rgba(20,119,248,0.8)" />
+                </View> :
+                [
+                    (
+                        cvlis != null
+                            ?
+                            <FlatList
+                                style={styles.wrapper}
+                                contentContainerStyle={styles.list}
+                                data={cvlis}
+                                renderItem={renderItem}
+                                keyExtractor={item => item.id.toString()}
+                            />
+                            :
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{color: 'black'}}>Não há crimes registrados para essa categoria.</Text>
+                            </View>
+                    )
+                ]
+            }
         </Container>
     );
 };
@@ -74,7 +93,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         padding: 30,
         borderRadius: 5,
-        shadowOffset:{  width: 10,  height: 10,  },
+        shadowOffset: { width: 10, height: 10, },
         shadowColor: 'black',
         shadowOpacity: 1.0,
     },
