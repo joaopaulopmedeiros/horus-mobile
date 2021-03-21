@@ -68,9 +68,11 @@ const CvliRegister = ({ navigation }) => {
             </View>
           </RadioButton.Group>
           <Text style={{ ...styles.title, marginTop: 16 }}>Registrar Crime</Text>
-          <ListTypeOfCvlis setTypeOfCvli={setTypeOfCvli} />
+          <View  style={{ marginLeft: -30 }}>
+            <ListTypeOfCvlis setTypeOfCvli={setTypeOfCvli} />
+          </View>
           <RadioButton.Group onValueChange={newValue => setStatusOfReportedPerson(newValue)} value={statusOfReportedPerson}>
-            <View>
+            <View style={{ marginLeft: -8 }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton color="rgba(20,119,248,1)" value={1} />
                 <Text style={{ color: '#77838F' }}>
@@ -101,7 +103,7 @@ const CvliRegister = ({ navigation }) => {
           {occuredNow == false &&
             <View>
               <View style={{ marginTop: 24 }}>
-                <Text style={{ color: '#77838F' }}>Informe a data do ocorrido</Text>
+                <Text style={{ color: '#77838F' }}>Informe a data</Text>
                 <TextInputMask
                   style={{
                     borderWidth: 1,
@@ -121,7 +123,7 @@ const CvliRegister = ({ navigation }) => {
                 />
               </View>
               <View style={{ marginTop: 12 }}>
-                <Text style={{ color: '#77838F' }}>Informe o horário do ocorrido</Text>
+                <Text style={{ color: '#77838F' }}>Informe o horário</Text>
                 <TextInputMask
                   style={{
                     borderWidth: 1,
@@ -142,8 +144,8 @@ const CvliRegister = ({ navigation }) => {
               </View>
             </View>
           }
-          <View style={{marginTop: 24}}>
-            <Text  style={{ color: '#77838F' }}>Descreva o ocorrido</Text>
+          <View style={{ marginTop: 24 }}>
+            <Text style={{ color: '#77838F' }}>Descreva o ocorrido</Text>
             <TextInput
               style={{
                 borderWidth: 1,
@@ -160,6 +162,9 @@ const CvliRegister = ({ navigation }) => {
               multiline={true}
               maxLength={70} />
           </View>
+          <TouchableOpacity style={styles.submitBtn}>
+            <Text style={styles.submitBtnText}>Registrar</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </Container>
@@ -192,6 +197,18 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderWidth: 1,
     borderRadius: 3,
+  },
+  submitBtn: {
+    marginTop: 10,
+    backgroundColor: "rgba(20,119,248,0.8)",
+    borderRadius: 3,
+    width: "25%",
+    alignSelf: "center",
+  },
+  submitBtnText: {
+    paddingVertical: 8,
+    textAlign: "center",
+    color: "#fff",
   },
 })
 
