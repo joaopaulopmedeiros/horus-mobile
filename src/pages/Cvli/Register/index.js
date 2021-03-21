@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
-import { Alert, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
+import React, { useState, useContext, useEffect, useCallback, useRef } from "react";
+import { Alert, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../../../components/Header";
 import { Container } from "../../../components/Container";
@@ -8,6 +8,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { RadioButton } from 'react-native-paper';
 import ListTypeOfCvlis from '../Main/ListTypeOfCvlis';
 import { TextInputMask } from 'react-native-masked-text';
+import MapView, { MapEvent, Marker } from 'react-native-maps';
+import defaultMapLocation from "../../../services/defaultMapLocation";
+import marker from "../../../../assets/marker.png";
+import { customMapStyle } from "../../../styles/maps/index";
+import {
+  requestPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
 
 const CvliRegister = ({ navigation }) => {
   const insets = useSafeAreaInsets();
@@ -21,9 +29,66 @@ const CvliRegister = ({ navigation }) => {
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
 
+  const [currentRegion, setCurrentRegion] = useState(null);
+  const [GPSIsGranted, setGPSIsGranted] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  const mapRef = useRef(null);
+
   function handleNavigationToAccountLogin() {
     navigation.navigate('Conta', { screen: 'Login', initial: false });
   }
+
+  function handleSelectMapPosition(event) {
+    setLatitude(event.nativeEvent.coordinate.latitude);
+    setLongitude(event.nativeEvent.coordinate.longitude);
+  }
+  async function loadPosition() {
+    try {
+      const { granted } = await requestPermissionsAsync();
+      if (granted) {
+        const { coords } = await getCurrentPositionAsync({
+          enableHighAccuracy: true,
+        });
+
+        const { latitude, longitude } = coords;
+
+        setCurrentRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.04,
+          longitudeDelta: 0.04,
+        });
+
+        setGPSIsGranted(true);
+
+        mapRef.current.animateCamera({
+          center: {
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+            zoom: 2,
+          },
+        });
+        return {
+          latitude,
+          longitude,
+        }
+      }
+    } catch (error) {
+      console.log(error);
+
+      setCurrentRegion(defaultMapLocation);
+
+      setGPSIsGranted(false);
+    }
+  }
+
+  useEffect(() => {
+    loadPosition();
+  }, []);
 
   useEffect(() => {
     console.log(typeOfCvli);
@@ -68,7 +133,7 @@ const CvliRegister = ({ navigation }) => {
             </View>
           </RadioButton.Group>
           <Text style={{ ...styles.title, marginTop: 16 }}>Registrar Crime</Text>
-          <View  style={{ marginLeft: -30 }}>
+          <View style={{ marginLeft: -30 }}>
             <ListTypeOfCvlis setTypeOfCvli={setTypeOfCvli} />
           </View>
           <RadioButton.Group onValueChange={newValue => setStatusOfReportedPerson(newValue)} value={statusOfReportedPerson}>
@@ -162,6 +227,42 @@ const CvliRegister = ({ navigation }) => {
               multiline={true}
               maxLength={70} />
           </View>
+          <View style={{
+            paddingLeft: 8,
+            marginVertical: 6,
+            width: '90%',
+            maxWidth: 320,
+            height: 330,
+          }}>
+            <Text style={{
+              marginTop: 24,
+              marginBottom: 8,
+              color: "rgba(20,119,248,0.8)",
+              fontFamily: "Montserrat_700Bold",
+            }}>Você pode nos mostrar o local clicando no mapa</Text>
+            <MapView
+              tooltip={true}
+              ref={mapRef}
+              initialRegion={currentRegion}
+              customMapStyle={customMapStyle}
+              style={{
+                height: 240,
+                width: 320,
+              }}
+              onPress={handleSelectMapPosition}
+            >
+              {latitude != null &&
+                <Marker
+                  coordinate={{
+                    latitude: latitude,
+                    longitude: longitude,
+                  }}
+                >
+                  <Image source={marker} />
+                </Marker>
+              }
+            </MapView>
+          </View>
           <TouchableOpacity style={styles.submitBtn}>
             <Text style={styles.submitBtnText}>Registrar</Text>
           </TouchableOpacity>
@@ -203,6 +304,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(20,119,248,0.8)",
     borderRadius: 3,
     width: "50%",
+    alignSelf: "flex-start",
     maxWidth: 130,
   },
   submitBtnText: {
