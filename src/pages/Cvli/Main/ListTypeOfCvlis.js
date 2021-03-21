@@ -1,32 +1,54 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 
-const ListTypeOfCvlis = ({ navigation }) => {
+const ListTypeOfCvlis = ({ navigation, setTypeOfCvli }) => {
+  const basePath = "../../../../assets/tipos_crimes";
+  const activePath = "/active";
+  const unactivePath = "/unactive";
+
   const typeOfCvlis = [
-    { id: 1, title: 'Roubo de Veículos', imgPath: require("../../../../assets/roubo-veiculos.png") },
-    { id: 2, title: 'Furtos', imgPath: require("../../../../assets/furto.png") },
-    { id: 3, title: 'Roubo à mão armada', imgPath: require("../../../../assets/roubo-mao-armada.png") },
-    { id: 4, title: 'Agressão', imgPath: require("../../../../assets/agressao.png") },
-    { id: 5, title: 'Acidente de trânsito', imgPath: require("../../../../assets/acidente-transito.png") },
-    { id: 6, title: 'Maus tratos a animais', imgPath: require("../../../../assets/maustratos-animais.png") },
+    { id: 1, title: 'Roubo de Veículos', imgUnactivePath: require(basePath + unactivePath + "/roubo-veiculos.png"), imgActivePath: require(basePath + activePath + "/roubo-veiculos.png") },
+    { id: 2, title: 'Furtos', imgUnactivePath: require(basePath + unactivePath + "/furto.png"), imgActivePath: require(basePath + activePath + "/furto.png") },
+    { id: 3, title: 'Roubo à mão armada', imgUnactivePath: require(basePath + unactivePath + "/roubo-mao-armada.png"), imgActivePath: require(basePath + activePath + "/roubo-mao-armada.png") },
+    { id: 4, title: 'Agressão', imgUnactivePath: require(basePath + unactivePath + "/agressao.png"), imgActivePath: require(basePath + activePath + "/agressao.png") },
+    { id: 5, title: 'Acidente de trânsito', imgUnactivePath: require(basePath + unactivePath + "/acidente-transito.png"), imgActivePath: require(basePath + activePath + "/acidente-transito.png") },
+    { id: 6, title: 'Maus tratos a animais', imgUnactivePath: require(basePath + unactivePath + "/maustratos-animais.png"), imgActivePath: require(basePath + activePath + "/maustratos-animais.png") },
   ];
+
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => setSelectedCard(null);
+    }, [navigation])
+  );
+
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.title}>
+      {navigation && <Text style={styles.title}>
         Tipos de Crimes
-      </Text>
+      </Text>}
       <View style={styles.cvlisWrapper}>
         {typeOfCvlis.map(item => (
           <TouchableOpacity
             key={item.id}
             activeOpacity={1}
-            style={styles.card}
+            style={selectedCard == item.id ? styles.activeCard : styles.unactiveCard}
             onPress={() => {
-              navigation.navigate('Crimes', { screen: 'ListaPorTipo', initial: false, params: { type: item.id } })
+              {
+                setSelectedCard(item.id);
+                if (navigation) {
+                  navigation.navigate('Crimes', { screen: 'ListaPorTipo', initial: false, params: { type: item.id } })
+                }
+                if (setTypeOfCvli) {
+                  setTypeOfCvli(item.id);
+                };
+              }
             }}
           >
-            <Image source={item.imgPath} />
-            <Text style={styles.cardTitle}>
+            <Image source={selectedCard == item.id ? item.imgActivePath : item.imgUnactivePath} />
+            <Text style={selectedCard == item.id ? styles.activeCardTitle : styles.unactiveCardTitle}>
               {item.title}
             </Text>
           </TouchableOpacity>
@@ -51,13 +73,13 @@ const styles = StyleSheet.create({
   },
   cvlisWrapper: {
     flexDirection: "row",
-    justifyContent:'space-around',
+    justifyContent: 'space-around',
     flexWrap: 'wrap',
     marginTop: 16,
     marginBottom: 32,
     marginLeft: -10,
   },
-  card: {
+  unactiveCard: {
     backgroundColor: "#fff",
     height: 125,
     width: '40%',
@@ -71,14 +93,36 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginRight: 16
   },
-  cardTitle: {
+  activeCard: {
+    backgroundColor: "rgba(20,119,248,0.8)",
+    height: 125,
+    width: '40%',
+    maxWidth: 160,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 8,
+    marginRight: 16
+  },
+  unactiveCardTitle: {
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 13,
     width: "90%",
     color: "rgba(20,119,248,0.8)",
     textAlign: "center",
     marginTop: 2
-  }
+  },
+  activeCardTitle: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 13,
+    width: "90%",
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 2
+  },
 })
 
 export default ListTypeOfCvlis;
