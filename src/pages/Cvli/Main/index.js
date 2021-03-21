@@ -6,7 +6,7 @@ import { Container } from "../../../components/Container";
 import ListLastCvlis from "./ListLastCvlis";
 import ListTypeOfCvlis from "./ListTypeOfCvlis";
 
-const CvliList = ({navigation}) => {
+const CvliMain = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -20,4 +20,4 @@ const CvliList = ({navigation}) => {
   );
 };
 
-export default CvliList;
+export default CvliMain;
