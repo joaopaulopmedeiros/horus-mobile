@@ -10,18 +10,22 @@ import VerifiedIcon from "../../../styles/icons/index";
 const CvliListByTipe = ({ navigation, route }) => {
     const [cvlis, setCvlis] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
 
     useEffect(() => loadCvlis(), []);
 
     function loadCvlis() {
         api.get('/cvlis', {
             params: {
+                page,
                 type: route.params.type
             }
         }).then(response => {
             console.log(response.data.data);
+            console.log(page);
             if (response.data.data.length != 0) setCvlis(response.data.data);
             setLoading(false);
+            setPage(page + 1);
         }).catch(error => {
             console.log(error);
             setLoading(false);
@@ -49,6 +53,19 @@ const CvliListByTipe = ({ navigation, route }) => {
         </TouchableOpacity>
     );
 
+    const renderFooter = () => {
+        if (!loading) return null;
+
+        return (
+            <View style={{
+                alignSelf: 'center',
+                marginVertical: 20,
+            }}>
+                <ActivityIndicator />
+            </View>
+        );
+    };
+
     return (
         <Container marginTop={insets.top}>
             <Header title="Crimes Registrados" />
@@ -65,6 +82,9 @@ const CvliListByTipe = ({ navigation, route }) => {
                         data={cvlis}
                         renderItem={renderItem}
                         keyExtractor={item => item.id.toString()}
+                        onEndReached={loadCvlis}
+                        onEndReachedThreshold={0.1}
+                        ListFooterComponent={renderFooter}
                     />
                     :
                     <View style={styles.centralize}>
