@@ -11,7 +11,7 @@
   <a href="javscript:void(0)">Continue Estudando</a>
 </div>
 
-<div align="center">
+<div align="center" style="margin-top: 40px;">
  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&color=rgba(20,119,248,0.8)&labelColor=000000" alt="PRs welcome!" />
 </div>
 
