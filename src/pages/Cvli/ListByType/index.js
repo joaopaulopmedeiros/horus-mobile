@@ -57,23 +57,20 @@ const CvliListByTipe = ({ navigation, route }) => {
                 <View style={styles.centralize}>
                     <ActivityIndicator size="large" color="rgba(20,119,248,0.8)" />
                 </View> :
-                [
-                    (
-                        cvlis != null
-                            ?
-                            <FlatList
-                                style={styles.wrapper}
-                                contentContainerStyle={styles.list}
-                                data={cvlis}
-                                renderItem={renderItem}
-                                keyExtractor={item => item.id.toString()}
-                            />
-                            :
-                            <View style={styles.centralize}>
-                                <Text>Não há crimes registrados para essa categoria.</Text>
-                            </View>
-                    )
-                ]
+                cvlis != null
+                    ?
+                    <FlatList
+                        style={styles.wrapper}
+                        contentContainerStyle={styles.list}
+                        data={cvlis}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                    :
+                    <View style={styles.centralize}>
+                        <Text>Não há crimes registrados para essa categoria.</Text>
+                    </View>
+
             }
         </Container>
     );
@@ -121,10 +118,10 @@ const styles = StyleSheet.create({
         marginLeft: 2,
         color: '#77838F'
     },
-    centralize: { 
-        flex: 1, 
-        justifyContent: 'center', 
-        alignItems: 'center' 
+    centralize: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 })
 
