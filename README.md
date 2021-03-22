@@ -57,7 +57,7 @@ Nos links abaixo você encontra o layout do projeto. Lembrando que você precisa
 - Visualização de crimes por categoria (com scroll infinito);
 
 
-## 😀Continue Estudando:
+## 😀Continue Estudando
 - [Rocketseat](https://rocketseat.com.br/)
 
 ---
