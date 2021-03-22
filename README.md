@@ -54,9 +54,10 @@ Nos links abaixo você encontra o layout do projeto. Lembrando que você precisa
 - Visualização dos 10 últimos crimes registrados na aplicação;
 - Visualização de crimes por categoria (com scroll infinito);
 
----
 
-Continue estudando:
+## 😀Continue estudando:
 - [Rocketseat](https://rocketseat.com.br/)
+
+---
 
 Feito com ♥ by Horus development team.
