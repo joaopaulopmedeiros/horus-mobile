@@ -1,13 +1,13 @@
-<h1 align="center">
+<div align="center">
     <img alt="Happy" title="Happy" width="80" src="assets/icon.png" />
-</h1>
+</div>
 
-<p align="center">
+<div align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#memo-licença">Licença</a>
-</p>
+  <a href="javscript:void(0)">Licença</a>
+</div>
 
 <p align="center">
  <img src="https://img.shields.io/static/v1?label=PRs&message=welcome&color=rgba(20,119,248,0.8)&labelColor=000000" alt="PRs welcome!" />
@@ -35,6 +35,7 @@ O Horus é aplicação nativa para plataformas IOS e Android, capaz de auxiliar 
 Nos links abaixo você encontra o layout do projeto web e também do mobile. Lembrando que você precisa ter uma conta no [Figma](http://figma.com/) para acessá-lo.
 
 - [Acesse aqui](https://www.figma.com/file/Sy7qXkAI2Ve0MZUV4DXAWV/Ui%2F-Telas-HORUS?node-id=0%3A1)
+
 
 ## 🧠 Features
 
