@@ -15,12 +15,11 @@
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=rgba(20,119,248,0.8)&labelColor=000000">
 </div>
 
-
-<div align="center" style="margin-top: 20px">
-    <p>Mobile</p>
-</div>
-
 <br>
+
+## 💻 Projeto
+
+O horus-mobile é aplicação nativa para plataformas IOS e Android, capaz de auxiliar no processo de divulgação/prevenção dos casos de violência intencional nos centros urbanos, através da participação ativa da população. 
 
 ## 🚀 Tecnologias
 
@@ -31,13 +30,18 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Axios](https://github.com/axios/axios)
 - [React Hook Form](https://react-hook-form.com/get-started)
 
-## 💻 Projeto
 
-O Horus é aplicação nativa para plataformas IOS e Android, capaz de auxiliar no processo de divulgação/prevenção dos casos de violência intencional nos centros urbanos, através da participação ativa da população. 
+## Como instalar 
+- Certifique-se de ter o node.js instalado. <br>
+- Então, execute no terminal:
+    - `npm install` ou `yarn install`
+    - `npm start` ou `yarn start` 
+- Instale o cliente do expo na sua loja de aplicativos;
+- Use o QR Code para rodar o horus-mobile em modo de desenvolvimento.
 
 ## 🔖 Layout
 
-Nos links abaixo você encontra o layout do projeto web e também do mobile. Lembrando que você precisa ter uma conta no [Figma](http://figma.com/) para acessá-lo.
+Nos links abaixo você encontra o layout do projeto. Lembrando que você precisa ter uma conta no [Figma](http://figma.com/) para acessá-lo.
 
 - [Acesse aqui](https://www.figma.com/file/Sy7qXkAI2Ve0MZUV4DXAWV/Ui%2F-Telas-HORUS?node-id=0%3A1)
 
@@ -50,10 +54,9 @@ Nos links abaixo você encontra o layout do projeto web e também do mobile. Lem
 - Visualização dos 10 últimos crimes registrados na aplicação;
 - Visualização de crimes por categoria (com scroll infinito);
 
-## Licença
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
-
 ---
+
+Continue estudando:
+- [Rocketseat](https://rocketseat.com.br/)
 
 Feito com ♥ by Horus development team.
