@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="Happy" title="Happy" width="80" src="assets/icon.png" />
+    <img alt="Horus" title="Horus" width="80" src="assets/icon.png" />
 </div>
 
 <div align="center">
