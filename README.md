@@ -3,10 +3,12 @@
 </div>
 
 <div align="center">
-  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="javscript:void(0)">Licença</a>
+  <a href="#">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#">Como Instalar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="javscript:void(0)">Continue Estudando</a>
 </div>
 
 <div align="center">
@@ -31,7 +33,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [React Hook Form](https://react-hook-form.com/get-started)
 
 
-## Como instalar 
+## Como Instalar 
 - Certifique-se de ter o node.js instalado. <br>
 - Então, execute no terminal:
     - `npm install` ou `yarn install`
@@ -55,7 +57,7 @@ Nos links abaixo você encontra o layout do projeto. Lembrando que você precisa
 - Visualização de crimes por categoria (com scroll infinito);
 
 
-## 😀Continue estudando:
+## 😀Continue Estudando:
 - [Rocketseat](https://rocketseat.com.br/)
 
 ---
